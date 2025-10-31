@@ -7,7 +7,6 @@
  */
 import java.util.ArrayList;
 public class Biblioteca{
-    private String temp;
     private String nombre;
     private ArrayList<Libro> libros;
     private ArrayList<Socio> socios;
