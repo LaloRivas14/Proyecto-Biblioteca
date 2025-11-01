@@ -118,6 +118,7 @@ public class Biblioteca{
         this.getSocios().add(new Docente(p_dniSocio,p_nombre,p_area));
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * Intenta registrar un prestamo para un libro
      * @param p_fechaRetiro fecha de retiro del libro
@@ -154,6 +155,25 @@ public class Biblioteca{
 
     }
 
+=======
+    
+    /**
+     * devuelve un colección con los docentes responsables.
+     * @return array list
+     */
+    public ArrayList<Socios> docentesResponsables(){
+        ArrayList<Socios> docentesResponsables = new ArrayList();
+        for(Socio unSocio : this.getSocios()){
+            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
+                if(unSocio.esResponsable()){
+                    docentesResponsables.add(unSocio);
+                }
+            }
+        }
+        return docentesResponsables;
+    }
+    
+>>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
 =======
     
     /**
