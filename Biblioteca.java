@@ -117,6 +117,7 @@ public class Biblioteca{
     public void nuevoSocioDocente(int p_dniSocio,String p_nombre,String p_area){
         this.getSocios().add(new Docente(p_dniSocio,p_nombre,p_area));
     }
+<<<<<<< HEAD
     /**
      * Intenta registrar un prestamo para un libro
      * @param p_fechaRetiro fecha de retiro del libro
@@ -153,6 +154,25 @@ public class Biblioteca{
 
     }
 
+=======
+    
+    /**
+     * devuelve un colección con los docentes responsables.
+     * @return array list
+     */
+    public ArrayList<Socios> docentesResponsables(){
+        ArrayList<Socios> docentesResponsables = new ArrayList();
+        for(Socio unSocio : this.getSocios()){
+            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
+                if(unSocio.esResponsable()){
+                    docentesResponsables.add(unSocio);
+                }
+            }
+        }
+        return docentesResponsables;
+    }
+    
+>>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
 
@@ -161,7 +181,7 @@ public class Biblioteca{
      */
     public Socio buscarSocio(int p_dniSocio){
         for(Socio unSocio : this.getSocios()){
-            if(unSocio.getDniSocio().equals(p_dniSocio)){
+            if(unSocio.getDniSocio() == p_dniSocio){
                 return unSocio;
             }else{
                 return null;
@@ -227,16 +247,12 @@ public class Biblioteca{
      * @return cadena de caracteres
      */
     public String listaDeDocentesResponsables(){
-        String listaSocios = "      Lista de Docentes Responsables:\n\n";
+        String listaDocentesResponsables = "      Lista de Docentes Responsables:\n\n";
         int indice = 0;
-        for(Socio unSocio : this.getSocios()){
-            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
-                if(unSocio.esResponsable()){
+        for(Socio unSocio : this.docentesResponsables()){
                     indice ++;
-                    listaSocios = indice+")"+unSocio.toString()+"\n";
-                }
-            }
+                    listaDocentesResponsables = indice+")"+unSocio.toString()+"\n";
         }
-        return listaSocios;
+        return listaDocentesResponsables;
     }
 }
