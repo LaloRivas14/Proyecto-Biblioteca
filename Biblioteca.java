@@ -117,9 +117,6 @@ public class Biblioteca{
     public void nuevoSocioDocente(int p_dniSocio,String p_nombre,String p_area){
         this.getSocios().add(new Docente(p_dniSocio,p_nombre,p_area));
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     /**
      * Intenta registrar un prestamo para un libro
      * @param p_fechaRetiro fecha de retiro del libro
@@ -154,12 +151,22 @@ public class Biblioteca{
             (fecha.get(Calendar.MONTH) + 1) + "/" +
             fecha.get(Calendar.YEAR));
 
-    }
-
-=======
-=======
->>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
-    
+    }  
+    /**
+     * devuelve un colección con los docentes responsables.
+     * @return array list
+     */
+    public ArrayList<Socios> docentesResponsables(){
+        ArrayList<Socios> docentesResponsables = new ArrayList();
+        for(Socio unSocio : this.getSocios()){
+            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
+                if(unSocio.esResponsable()){
+                    docentesResponsables.add(unSocio);
+                }
+            }
+        }
+        return docentesResponsables;
+    }   
     /**
      * devuelve un colección con los docentes responsables.
      * @return array list
@@ -175,30 +182,6 @@ public class Biblioteca{
         }
         return docentesResponsables;
     }
-    
-<<<<<<< HEAD
->>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
-=======
-    
-    /**
-     * devuelve un colección con los docentes responsables.
-     * @return array list
-     */
-    public ArrayList<Socios> docentesResponsables(){
-        ArrayList<Socios> docentesResponsables = new ArrayList();
-        for(Socio unSocio : this.getSocios()){
-            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
-                if(unSocio.esResponsable()){
-                    docentesResponsables.add(unSocio);
-                }
-            }
-        }
-        return docentesResponsables;
-    }
-    
->>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
-=======
->>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
 
@@ -214,7 +197,6 @@ public class Biblioteca{
             }
         }
     }
-
     /**
      * Devuelve un String con la lista de todos los socios según formato1.
      * D.N.I.: <<dni>> || <<nombre y apellido>> (<<tipo>>) || Libros Prestados: <<cant. prést. actuales >>
@@ -233,7 +215,6 @@ public class Biblioteca{
 
         return listaSocios;
     }
-
     /**
      * Devuelve un String con la lista de todos los libros según formato2.
      * Titulo: <<titulo>> || Prestado: (<<Si|No>>)
@@ -254,7 +235,6 @@ public class Biblioteca{
         }
         return listaLibros;
     }
-
     /**
      * Devuelve un String con la lista de los títulos con los que cuenta la Biblioteca.
      * @return cadena de caracteres
@@ -267,7 +247,6 @@ public class Biblioteca{
         }
         return listaLibros;
     }
-
     /**
      * listaDeDocentesResponsables(): devuelve un String según formato3.
      * @return cadena de caracteres
