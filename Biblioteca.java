@@ -119,6 +119,7 @@ public class Biblioteca{
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * Intenta registrar un prestamo para un libro
      * @param p_fechaRetiro fecha de retiro del libro
@@ -156,6 +157,8 @@ public class Biblioteca{
     }
 
 =======
+=======
+>>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
     
     /**
      * devuelve un colección con los docentes responsables.
@@ -173,6 +176,7 @@ public class Biblioteca{
         return docentesResponsables;
     }
     
+<<<<<<< HEAD
 >>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
 =======
     
@@ -192,6 +196,8 @@ public class Biblioteca{
         return docentesResponsables;
     }
     
+>>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
+=======
 >>>>>>> 92980cbd217077ed4a1861e3388a75db7d2e3ab4
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
