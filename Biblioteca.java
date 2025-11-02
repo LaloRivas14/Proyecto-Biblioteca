@@ -160,16 +160,14 @@ public class Biblioteca{
      public int cantidadSociosPorTipo() {
         int cantidadDocentes = 0;
         int cantidadEstudiantes = 0;
-        
+       
         for (Socio unSocio : this.getSocios()) {
-            String tipo = unSocio.getSocio().socio();
-            if (tipo.equalsIgnoreCase("Docente")) {
+            if (unSocio.soyDeLaClase().equalsIgnoreCase("Docente") {
                 cantidadDocentes ++;
-            }else if(tipo.equalsIgnoreCase("Estudiante")){
+            }else if(unSocio.soyDeLaClase().equalsIgnoreCase("Estudiante"){
                 cantidadEstudiantes ++;
             }
         }
-        
         
         System.out.println("Cantida de socios :");
         System.out.println("Cantida de Docentes :" + cantidadDocentes);
