@@ -152,6 +152,48 @@ public class Biblioteca{
             fecha.get(Calendar.YEAR));
 
     }  
+
+       /**
+     * Cuenta la cantidad de socios que esten registreados, ya sean Docentes y Estudiantes.
+     * Devuelve una leyenda segun la cantidad y el tipo de socios.
+     */
+     public int cantidadSociosPorTipo() {
+        int cantidadDocentes = 0;
+        int cantidadEstudiantes = 0;
+        
+        for (Socio unSocio : this.getSocios()) {
+            String tipo = unSocio.getSocio().socio();
+            if (tipo.equalsIgnoreCase("Docente")) {
+                cantidadDocentes ++;
+            }else if(tipo.equalsIgnoreCase("Estudiante")){
+                cantidadEstudiantes ++;
+            }
+        }
+        
+        
+        System.out.println("Cantida de socios :");
+        System.out.println("Cantida de Docentes :" + cantidadDocentes);
+        System.out.println("Cantida de Estudiantes :" + cantidadEstudiantes);
+    }
+    
+     
+    /**
+     * devuelve un colección con los prestamos vencidos.
+     * @return un arraylist con los prestamos vencidos.
+     */
+        public ArrayList<Prestamo> prestamosVencidos() {
+        ArrayList<Prestamo> prestamosVencidos = new ArrayList();
+        Calendar fechaHoy = Calendar.getInstance();
+        for (Socio unSocio : this.getSocios()) {
+            for (Prestamo unPrestamo : unSocio.getPrestamos()) {
+                if (unPrestamo.vencido(fechaHoy)) {
+                    prestamosVencidos.add(unPrestamo);
+                }
+            }
+        }
+        return prestamosVencidos;
+    }
+    
     /**
      * devuelve un colección con los docentes responsables.
      * @return array list
@@ -182,6 +224,23 @@ public class Biblioteca{
         }
         return docentesResponsables;
     }
+
+        /**
+     * Dependiendo si el libro esta prestado o no, devuelve un mensaje, si lo esta devuleve el socio que lo posee, sino un mensaje que esta en la biblioteca.
+     * @param p_libro libro que se quiere saber si esta prestado o disponible.
+     */
+        public String quienTieneElLibro(Libro p_libro) {
+        for (Socio unSocio : this.getSocios()) {
+            for (Prestamo unPrestamo : unSocio.getPrestamos()) {
+                if (p_libro == unPrestamo.getLibro()) {
+                    System.out.println("El socio: " + unSocio.getNombre() + " tiene el libro");
+                }else {
+                    System.out.println("El libro se encuentra en la biblioteca");    
+                }
+            }
+        }
+    }
+    
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
 
