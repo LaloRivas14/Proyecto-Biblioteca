@@ -157,17 +157,19 @@ public class Biblioteca{
      * Cuenta la cantidad de socios que esten registreados, ya sean Docentes y Estudiantes.
      * Devuelve una leyenda segun la cantidad y el tipo de socios.
      */
-     public int cantidadSociosPorTipo() {
-        int cantidadDocentes = 0;
-        int cantidadEstudiantes = 0;
-       
+    public int cantidadSociosPorTipo() {
+       int cantidadDocentes = 0;
+       int cantidadEstudiantes = 0;
+        
         for (Socio unSocio : this.getSocios()) {
-            if (unSocio.soyDeLaClase().equalsIgnoreCase("Docente") {
+            String tipo = unSocio.getSocio().socio();
+            if (tipo.equalsIgnoreCase("Docente")) {
                 cantidadDocentes ++;
-            }else if(unSocio.soyDeLaClase().equalsIgnoreCase("Estudiante"){
+            }else if(tipo.equalsIgnoreCase("Estudiante")){
                 cantidadEstudiantes ++;
             }
         }
+        
         
         System.out.println("Cantida de socios :");
         System.out.println("Cantida de Docentes :" + cantidadDocentes);
