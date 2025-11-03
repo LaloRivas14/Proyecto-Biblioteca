@@ -229,14 +229,13 @@ public class Biblioteca{
      * Dependiendo si el libro esta prestado o no, devuelve un mensaje, si lo esta devuleve el socio que lo posee, sino un mensaje que esta en la biblioteca.
      * @param p_libro libro que se quiere saber si esta prestado o disponible.
      */
-        public String quienTieneElLibro(Libro p_libro) {
-        for (Socio unSocio : this.getSocios()) {
+    public String quienTieneElLibro(Libro p_libro) throws LibroNoPrestadoException{
+       for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
                 if (p_libro == unPrestamo.getLibro()) {
-                    System.out.println("El socio: " + unSocio.getNombre() + " tiene el libro");
-                }else {
-                    System.out.println("El libro se encuentra en la biblioteca");    
-                }
+                    throw new LibroNoPrestadoException("El socio " + unSocio.getNombre() + " tiene el libro"); 
+                    }else {
+                    System.out.println("El libro se encuentra en la biblioteca");}
             }
         }
     }
