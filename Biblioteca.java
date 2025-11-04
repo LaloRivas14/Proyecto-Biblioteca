@@ -154,7 +154,8 @@ public class Biblioteca{
     }  
 
        /**
-     * Cuenta la cantidad de socios que esten registreados, ya sean Docentes y Estudiantes.
+    * Cuenta la cantidad de socios que coinciden con un tipo especifico.
+    *  @param p_objeto El tipo de socio a contar.
      */
         public int cantidadSociosPorTipo(String p_objeto) {
         int cantidadTipo = 0;
