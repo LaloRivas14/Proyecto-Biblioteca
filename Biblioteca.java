@@ -164,7 +164,7 @@ public class Biblioteca{
                 cantidadTipo += 1;
             }
         }
-        return contar;
+        return cantidadTipo;
     }
     
     /**
