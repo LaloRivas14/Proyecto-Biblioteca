@@ -155,13 +155,12 @@ public class Biblioteca{
 
        /**
      * Cuenta la cantidad de socios que esten registreados, ya sean Docentes y Estudiantes.
-     * Devuelve una leyenda segun la cantidad y el tipo de socios.
      */
         public int cantidadSociosPorTipo(String p_objeto) {
-        int contar = 0;
+        int cantidadTipo = 0;
         for (Socio unSocio : this.getSocios()) {
             if (unSocio.soyDeLaClase().equals(p_objeto)) {
-                contar += 1;
+                cantidadTipo += 1;
             }
         }
         return contar;
