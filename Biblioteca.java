@@ -157,26 +157,16 @@ public class Biblioteca{
      * Cuenta la cantidad de socios que esten registreados, ya sean Docentes y Estudiantes.
      * Devuelve una leyenda segun la cantidad y el tipo de socios.
      */
-    public int cantidadSociosPorTipo() {
-       int cantidadDocentes = 0;
-       int cantidadEstudiantes = 0;
-        
+        public int cantidadSociosPorTipo(String p_objeto) {
+        int contar = 0;
         for (Socio unSocio : this.getSocios()) {
-            String tipo = unSocio.getSocio().socio();
-            if (tipo.equalsIgnoreCase("Docente")) {
-                cantidadDocentes ++;
-            }else if(tipo.equalsIgnoreCase("Estudiante")){
-                cantidadEstudiantes ++;
+            if (unSocio.soyDeLaClase().equals(p_objeto)) {
+                contar += 1;
             }
         }
-        
-        
-        System.out.println("Cantida de socios :");
-        System.out.println("Cantida de Docentes :" + cantidadDocentes);
-        System.out.println("Cantida de Estudiantes :" + cantidadEstudiantes);
+        return contar;
     }
     
-     
     /**
      * devuelve un colección con los prestamos vencidos.
      * @return un arraylist con los prestamos vencidos.
@@ -233,12 +223,13 @@ public class Biblioteca{
        for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
                 if (p_libro == unPrestamo.getLibro()) {
-                    throw new LibroNoPrestadoException("El socio " + unSocio.getNombre() + " tiene el libro"); 
+                    System.out.println("El socio " + unSocio.getNombre() + " tiene el libro");
                     }else {
-                    System.out.println("El libro se encuentra en la biblioteca");}
+                    throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
             }
         }
     }
+}      
     
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
