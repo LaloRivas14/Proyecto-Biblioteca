@@ -120,6 +120,7 @@ public abstract class Socio
         if(this.getPrestamos().size() > 0){
          return this.getPrestamos().remove(p_prestamo);
         }
+        return false;
     }
     /**
      * Devuelve la cantidad de libros actualmente prestados al socio.
@@ -127,7 +128,13 @@ public abstract class Socio
      * @return el número de libros prestados
      */
     public int cantLibrosPrestados(){
-        return this.getPrestamos().size();
+        int prestados = 0;
+        for(Prestamo prestamo : this.getPrestamos()){
+            if(prestamo.getFechaDevolucion() == null){
+                prestados++;
+            }
+        return prestados;
+     }
     }
     /**
      * Devuelve una representación en cadena del socio, incluyendo su DNI, nombre, tipo de socio y cantidad de libros prestados.
