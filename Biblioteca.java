@@ -222,7 +222,7 @@ public class Biblioteca{
        for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
                 if (p_libro == unPrestamo.getLibro()) {
-                    System.out.println("El socio " + unSocio.getNombre() + " tiene el libro");
+                    System.out.println("---" + unSocio.getNombre() + "---");
                     }else {
                     throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
             }
