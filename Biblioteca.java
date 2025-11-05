@@ -128,8 +128,8 @@ public class Biblioteca{
     public boolean prestarLibro(Calendar p_fechaRetiro,Socio p_socio,Libro p_libro ){
         if(p_socio.puedePedir() && !p_libro.prestado()){
             Prestamo prestamo = new Prestamo(p_fechaRetiro,p_socio,p_libro);
-            p_socio.addPrestamo(prestamo);
-            p_libro.addPrestamo(prestamo);
+            p_socio.agregarPrestamo(prestamo);
+            p_libro.agregarPrestamo(prestamo);
             return true;
         }else{
             return false;
