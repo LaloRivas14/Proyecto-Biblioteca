@@ -157,10 +157,10 @@ public class Biblioteca{
     * Cuenta la cantidad de socios que coinciden con un tipo especifico.
     *  @param p_objeto El tipo de socio a contar.
      */
-        public int cantidadSociosPorTipo(String p_objeto) {
+        public int cantidadDeSociosPorTipo(String p_tipoSocio) {
         int cantidadTipo = 0;
         for (Socio unSocio : this.getSocios()) {
-            if (unSocio.soyDeLaClase().equals(p_objeto)) {
+            if (unSocio.soyDeLaClase().equalsIgnoreCase(p_tipoSocio)) {
                 cantidadTipo += 1;
             }
         }
@@ -183,28 +183,12 @@ public class Biblioteca{
         }
         return prestamosVencidos;
     }
-    
     /**
      * devuelve un colección con los docentes responsables.
      * @return array list
      */
-    public ArrayList<Socios> docentesResponsables(){
-        ArrayList<Socios> docentesResponsables = new ArrayList();
-        for(Socio unSocio : this.getSocios()){
-            if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
-                if(unSocio.esResponsable()){
-                    docentesResponsables.add(unSocio);
-                }
-            }
-        }
-        return docentesResponsables;
-    }   
-    /**
-     * devuelve un colección con los docentes responsables.
-     * @return array list
-     */
-    public ArrayList<Socios> docentesResponsables(){
-        ArrayList<Socios> docentesResponsables = new ArrayList();
+    public ArrayList<Socio> docentesResponsables(){
+        ArrayList<Socio> docentesResponsables = new ArrayList();
         for(Socio unSocio : this.getSocios()){
             if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
                 if(unSocio.esResponsable()){
@@ -214,7 +198,6 @@ public class Biblioteca{
         }
         return docentesResponsables;
     }
-
         /**
      * Dependiendo si el libro esta prestado o no, devuelve un mensaje, si lo esta devuleve el socio que lo posee, sino un mensaje que esta en la biblioteca.
      * @param p_libro libro que se quiere saber si esta prestado o disponible.
@@ -222,8 +205,9 @@ public class Biblioteca{
     public String quienTieneElLibro(Libro p_libro) throws LibroNoPrestadoException{
        for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
+                //probar con == y equals
                 if (p_libro == unPrestamo.getLibro()) {
-                    System.out.println("---" + unSocio.getNombre() + "---");
+                    return unPrestamo.getSocio().getNombre();
                     }else {
                     throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
             }
@@ -258,7 +242,7 @@ public class Biblioteca{
             indice ++;
             listaSocios = indice+")"+unSocio.toString()+"\n";
         }
-        listaSocios =+ "**************************************\nCantidad de Socios del tipo estudiante: "+
+        listaSocios += "**************************************\nCantidad de Socios del tipo estudiante: "+
         this.cantidadDeSociosPorTipo("estudiante")+"\nCantidad de Socios del tipo Docente: "+
         this.cantidadDeSociosPorTipo("docente")+"\n**************************************";
 
@@ -280,7 +264,7 @@ public class Biblioteca{
             }else{
                 prestado = "No";
             }
-            listaLibros =+ indice+")"+unLibro.toString()+" || Prestado: "+prestado+"\n";
+            listaLibros += indice+")"+unLibro.toString()+" || Prestado: "+prestado+"\n";
         }
         return listaLibros;
     }
@@ -292,7 +276,7 @@ public class Biblioteca{
         //Aca no s si se refiere a todos los que le pertenecen o a los que puede prestar
         String listaLibros;
         for(Libro unLibro : this.getLibros()){
-            listaLibros =+ unLibro.getTitulo()+"\n";
+            listaLibros += unLibro.getTitulo()+"\n";
         }
         return listaLibros;
     }
