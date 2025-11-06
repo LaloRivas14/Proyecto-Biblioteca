@@ -33,7 +33,7 @@ public class Docente extends Socio {
      /**@return true si el docente es responsable */
     public boolean esResponsable() {
         Calendar p_fecha = Calendar.getInstance();
-        for (Prestamo unPrestamo : super.getPrestamos()) {
+        for (Prestamo unPrestamo : this.getPrestamos()) {
             if (unPrestamo.vencido(p_fecha)) {
                 return false;
             }
@@ -47,7 +47,7 @@ public class Docente extends Socio {
      */
     public void agregarDiasDePrestamo(int p_dias) {
         if (this.esResponsable()) {
-            super.setDiasPrestamo(super.getDiasPrestamo() + p_dias);
+            this.setDiasPrestamo(this.getDiasPrestamo() + p_dias);
         }
     }
     
