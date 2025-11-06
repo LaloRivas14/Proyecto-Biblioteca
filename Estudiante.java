@@ -1,9 +1,9 @@
 
 /**
- * Write a description of class Estudiante here.
- * 
+ *Esta clase Estudiante es un subclase de la superclase(Socio).
+ *Esta clase modela a un Estudiante que a su vez es un Socio de la Biblioteca.
  * @author (pablo) 
- * @version (1)
+ * @version (1.1)
  */
 import java.util.Calendar;
 public class Estudiante extends Socio{
@@ -11,9 +11,9 @@ public class Estudiante extends Socio{
   private String carrera;
   
   /**
-     * Constructor que crea un objeto estudiante.
-     * @param p_dniSocio dni del estudiante socio
-     * @param p_nombre nombre del estudiante socio
+     * Constructor para instanciar un objeto estudiante.
+     * @param p_dniSocio dni del estudiante socio(heredado)
+     * @param p_nombre nombre del estudiante socio(heredado)
      * @param p_carrera carrera del estudiante
      */
    public Estudiante(int p_dniSocio,String p_nombre,String p_carrera){
@@ -21,10 +21,12 @@ public class Estudiante extends Socio{
       this.setCarrera(p_carrera);
   }
   
+  /**setArea guarda el valor ingresado como parametro en la variable carrera*/
   private void setCarrera(String p_carrera){
       this.carrera = p_carrera;
   }
   
+  /**@return carrera*/
   public String getEstudiante(){
       return this.carrera;
   }
@@ -36,12 +38,16 @@ public class Estudiante extends Socio{
      */
   @Override
   public boolean puedePedir(){
-      boolean puedePedir = super.puedePedir();
-      return (puedePedir && super.cantLibrosPrestados() <= 3); 
+      boolean puedePedir = this.puedePedir();
+      return (puedePedir && this.cantLibrosPrestados() <= 3); 
   }
   
-   /** @return "Estudiante"*/
-  public String soyDeLaClase(){
-      return "Estudiante";
-  }
+  /**
+     * Implementa el método abstracto 'soyDeLaClase' de la superclase Socio.
+     * @return la cadena "Estudiante" para identificar este tipo de socio.
+     */
+    @Override
+    public String soyDeLaClase() {
+        return "Estudiante";
+    }
   }
