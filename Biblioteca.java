@@ -191,7 +191,8 @@ public class Biblioteca{
         ArrayList<Socio> docentesResponsables = new ArrayList();
         for(Socio unSocio : this.getSocios()){
             if(unSocio.soyDeLaClase().equalsIgnoreCase("Docente")){
-                if(unSocio.esResponsable()){
+                Docente socioDoc = (Docente) unSocio;
+                if(socioDoc.esResponsable()){
                     docentesResponsables.add(unSocio);
                 }
             }
