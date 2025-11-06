@@ -277,7 +277,7 @@ public class Biblioteca{
      */
     public String listaDeTitulos(){
         //Aca no s si se refiere a todos los que le pertenecen o a los que puede prestar
-        String listaLibros;
+        String listaLibros = "";
         for(Libro unLibro : this.getLibros()){
             listaLibros += unLibro.getTitulo()+"\n";
         }
