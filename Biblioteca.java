@@ -205,16 +205,18 @@ public class Biblioteca{
      * @param p_libro libro que se quiere saber si esta prestado o disponible.
      */
     public String quienTieneElLibro(Libro p_libro) throws LibroNoPrestadoException{
+        String sociosConLibro = "";
        for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
                 //probar con == y equals
                 if (p_libro == unPrestamo.getLibro()) {
-                    return unPrestamo.getSocio().getNombre();
+                    sociosConLibro += "/ "+ unPrestamo.getSocio().getNombre();
                     }else {
                     throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
             }
         }
     }
+    return sociosConLibro;
 }      
     
     /**
