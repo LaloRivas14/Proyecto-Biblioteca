@@ -229,10 +229,9 @@ public class Biblioteca{
         for(Socio unSocio : this.getSocios()){
             if(unSocio.getDniSocio() == p_dniSocio){
                 return unSocio;
-            }else{
-                return null;
             }
         }
+        return null;
     }
     /**
      * Devuelve un String con la lista de todos los socios según formato1.
