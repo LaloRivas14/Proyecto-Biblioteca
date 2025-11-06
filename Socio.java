@@ -58,7 +58,7 @@ public abstract class Socio
      * 
      * @param p_diasPrestamos los días de préstamo
      */
-    private void setDiasPrestamo(int p_diasPrestamo){
+    protected void setDiasPrestamo(int p_diasPrestamo){
         this.diasPrestamo = p_diasPrestamo;
     }
     /**
@@ -116,11 +116,8 @@ public abstract class Socio
      * @param p_prestamo el préstamo a eliminar
      * @return verdadero si el préstamo se eliminó correctamente, falso en caso contrario
      */
-    public boolean quitarPrestamo(Prestamo p_prestamo){
-        if(this.getPrestamos().size() > 0){
+    public boolean quitarPrestamo(Prestamo p_prestamo){ 
          return this.getPrestamos().remove(p_prestamo);
-        }
-        return false;
     }
     /**
      * Devuelve la cantidad de libros actualmente prestados al socio.
@@ -133,8 +130,8 @@ public abstract class Socio
             if(prestamo.getFechaDevolucion() == null){
                 prestados++;
             }
-        return prestados;
      }
+        return prestados;
     }
     /**
      * Devuelve una representación en cadena del socio, incluyendo su DNI, nombre, tipo de socio y cantidad de libros prestados.
