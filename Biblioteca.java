@@ -57,7 +57,7 @@ public class Biblioteca{
      * Retorna la coleccion de libros
      * @return coleccion de objetos Libro
      */
-    private ArrayList<Libro> getLibros(){
+    public ArrayList<Libro> getLibros(){
         return this.libros;
     }
     /**
