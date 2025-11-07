@@ -35,7 +35,45 @@ public class GestioBiblioteca{
                 biblioteca.nuevoLibro(tituloLibro,edicionLibro,editorialLibro,anioLibro);
                 System.out.println("**** Ingreso de libro exitoso ****");
                 break;
-            case 4:
+
+            case 2: 
+                Scanner tipoSocio = new Scanner(System.in);
+                System.out.println("Socio que desea agregar");
+                System.out.println("Estudiante - 1");
+                System.out.println("Docente - 2");
+                System.out.print("Seleccionar una opcion: ");
+                tipoS = tipoSocio.nextInt();
+
+                if(tipoS == 1){
+
+                Scanner datos = new Scanner(System.in);
+                System.out.println("Ingrese el dni del estudiante");
+                int dniEstudiante = datos.nextInt(); 
+                System.out.println("Ingrese el nombre y apellido del estudiante");
+                String nombreEstudiante = datos.nextLine();
+                System.out.println("Ingrese la carrera del estudiante");
+                String carreraEstudiante = datos.nextLine();
+
+                biblioteca.nuevoSocioEstudiantedniEstudiante,nombreEstudiante, carreraEstudiante);
+                System.out.println("Ingreso del estudiante exitoso");
+
+                }else if(tipoS == 2){
+                Scanner datos = new Scanner(System.in);
+                System.out.println("Ingrese el dni del docente");
+                int dniDocente = datos.nextInt(); 
+                System.out.println("Ingrese el nombre y apellido del docente");
+                String nombreDocente = datos.nextLine();
+                System.out.println("Ingrese el area del docente");
+                String areaDocente = datos.nextLine();
+
+                biblioteca.nuevoSocioEstudiante(dniDocente,nombreDocente, areaDocente);
+                System.out.println("Ingreso del docente exitoso");
+                }else{
+                System.out.println("Seleccione una opcion correcta");
+                }
+                break;
+                
+        case 4:
                 Calendar fechaAct = Calendar.getInstance();
                 
                 System.out.print("ingrese el dni del socio");
