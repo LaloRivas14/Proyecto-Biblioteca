@@ -51,7 +51,17 @@ public class GestioBiblioteca{
                 biblioteca.devolverLibro(libroDevolver);
                 break;
             case 6:
-                System.out.print("ingrese el tipo de socio que desea 
+                System.out.print("ingrese el tipo de socio que desea saber la cantidad");
+                String tipo = teclado.nextLine();
+                if(tipo.equalsIgnoreCase("estudiante")){
+                    System.out.println("Cantidad de socios Estudiantes: "+biblioteca.cantidadDeSociosPorTipo(tipo));
+                }else if(tipo.equalsIgnoreCase("docente")){
+                    System.out.println("Cantidad de socios Docentes: "+biblioteca.cantidadDeSociosPorTipo(tipo));
+                }else{
+                    System.out.println("-----Tipo de socio ingresado Incorrecto------");
+                }
+                break;
+            case 7:
                 
                 
         }
@@ -64,6 +74,9 @@ public class GestioBiblioteca{
 public static void menu(){
     System.out.println("Menu de acciones: "+"\n 1)_Nuevo Libro"+"\n 2)_Nuevo socio estudiante"+"\n 3)_Nuevo socio Docente"+
                     "\n 4)_Prestar Libro"+"\n 5)_Devolver Libro"+"\n 6)_Cantidad de socios"+"\n 7)_Listas y datos"+"\n 8)_Que socio tiene un libro especifico");
+}
+public static void menuDeListas(){
+    System.out.println("Menu de listas: \n 1)_Docentes responsables \n 2)_  
 }
 public static Libro buscarLibro(String tituloLibro, ArrayList<Libro> p_libros){
     Libro libroEncontrado = null;
