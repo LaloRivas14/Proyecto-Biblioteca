@@ -17,19 +17,22 @@ public class GestioBiblioteca{
     
     Biblioteca biblioteca = new Biblioteca(nomBiblioteca);
     
-    String resp = "si"; 
-    while(resp.equals("si")){
+    boolean resp = true; 
+    int opcion = 0;
+    while(resp){
         menu();
-        switch(teclado.nextInt()){
+        opcion = teclado.nextInt();
+        teclado.nextLine();
+        switch(opcion){
             case 1:
-                System.out.print("Ingrese el titulo del libro");
+                System.out.print("Ingrese el titulo del libro: ");
                 String tituloLibro = teclado.nextLine();
-                System.out.print("Ingrese el num de edicion del libro");
+                System.out.print("Ingrese el num de edicion del libro: ");
                 int edicionLibro = teclado.nextInt();
                 teclado.nextLine();
-                System.out.print("Ingrese la editorial del libro");
+                System.out.print("Ingrese la editorial del libro: ");
                 String editorialLibro = teclado.nextLine();
-                System.out.print("ingrese el año del libro");
+                System.out.print("ingrese el año del libro: ");
                 int anioLibro = teclado.nextInt();
                 teclado.nextLine();
                 biblioteca.nuevoLibro(tituloLibro,edicionLibro,editorialLibro,anioLibro);
@@ -37,59 +40,64 @@ public class GestioBiblioteca{
                 break;
 
             case 2: 
-                Scanner tipoSocio = new Scanner(System.in);
                 System.out.println("Socio que desea agregar");
                 System.out.println("Estudiante - 1");
                 System.out.println("Docente - 2");
                 System.out.print("Seleccionar una opcion: ");
-                tipoS = tipoSocio.nextInt();
+                int tipoS = teclado.nextInt();
+                teclado.nextLine();
 
                 if(tipoS == 1){
 
-                Scanner datos = new Scanner(System.in);
-                System.out.println("Ingrese el dni del estudiante");
-                int dniEstudiante = datos.nextInt(); 
-                System.out.println("Ingrese el nombre y apellido del estudiante");
-                String nombreEstudiante = datos.nextLine();
-                System.out.println("Ingrese la carrera del estudiante");
-                String carreraEstudiante = datos.nextLine();
+                System.out.println("Ingrese el dni del estudiante: ");
+                int dniEstudiante = teclado.nextInt();
+                teclado.nextLine();
+                System.out.println("Ingrese el nombre y apellido del estudiante: ");
+                String nombreEstudiante = teclado.nextLine();
+                System.out.println("Ingrese la carrera del estudiante: ");
+                String carreraEstudiante = teclado.nextLine();
 
-                biblioteca.nuevoSocioEstudiantedniEstudiante,nombreEstudiante, carreraEstudiante);
+                biblioteca.nuevoSocioEstudiante(dniEstudiante,nombreEstudiante, carreraEstudiante);
                 System.out.println("Ingreso del estudiante exitoso");
 
                 }else if(tipoS == 2){
-                Scanner datos = new Scanner(System.in);
-                System.out.println("Ingrese el dni del docente");
-                int dniDocente = datos.nextInt(); 
-                System.out.println("Ingrese el nombre y apellido del docente");
-                String nombreDocente = datos.nextLine();
-                System.out.println("Ingrese el area del docente");
-                String areaDocente = datos.nextLine();
+                System.out.println("Ingrese el dni del docente: ");
+                int dniDocente = teclado.nextInt();
+                teclado.nextLine();
+                System.out.println("Ingrese el nombre y apellido del docente: ");
+                String nombreDocente = teclado.nextLine();
+                System.out.println("Ingrese el area del docente: ");
+                String areaDocente = teclado.nextLine();
 
-                biblioteca.nuevoSocioEstudiante(dniDocente,nombreDocente, areaDocente);
+                biblioteca.nuevoSocioDocente(dniDocente,nombreDocente, areaDocente);
                 System.out.println("Ingreso del docente exitoso");
                 }else{
-                System.out.println("Seleccione una opcion correcta");
+                System.out.println("Seleccione una opcion correcta: ");
                 }
                 break;
                 
-        case 4:
+            case 4:
                 Calendar fechaAct = Calendar.getInstance();
                 
-                System.out.print("ingrese el dni del socio");
+                System.out.print("ingrese el dni del socio: ");
                 Socio socioPrestar = biblioteca.buscarSocio(teclado.nextInt());
-                System.out.print("Ingrese el titulo del libro");
+                teclado.nextLine();
+                System.out.print("Ingrese el titulo del libro: ");
                 Libro libroPrestar = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
+                if(libroPrestar == null){
+                    System.out.println("Libro prestado o no encontrado");
+                    break;
+                }
                 biblioteca.prestarLibro(fechaAct,socioPrestar,libroPrestar);
                 System.out.println("*** Libro Prestado Con Exito ***");
                 break;
             case 5:
-                System.out.print("Ingrese el titulo del libro");
+                System.out.print("Ingrese el titulo del libro: ");
                 Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
                 biblioteca.devolverLibro(libroDevolver);
                 break;
             case 6:
-                System.out.print("ingrese el tipo de socio que desea saber la cantidad");
+                System.out.print("ingrese el tipo de socio que desea saber la cantidad: ");
                 String tipo = teclado.nextLine();
                 if(tipo.equalsIgnoreCase("estudiante")){
                     System.out.println("Cantidad de socios Estudiantes: "+biblioteca.cantidadDeSociosPorTipo(tipo));
@@ -100,9 +108,27 @@ public class GestioBiblioteca{
                 }
                 break;
             case 7:
+                menuDeListas();
+                mostrarUnaLista(teclado.nextInt(),biblioteca);
+                break;
+            case 8:
+                System.out.print("Ingrese el titulo del libro: ");
+                Libro libroEncontrar = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
+                if(libroEncontrar == null){
+                    System.out.println("Libro no encontrado..... ");
+                    break;
+                }
+                System.out.println("El o los socios que tienen el libro: "+biblioteca.quienTieneElLibro(libroEncontrar));
+                break;
+            case 9:
+                System.out.println("**** Cerrando Programa ***");
+                resp = false;
+                break;
+            default:
+                System.out.println("***** Opcion ingresada incorrecta ****");
                 
-                
-        }
+        } 
+        
     }
     
 }
@@ -110,11 +136,35 @@ public class GestioBiblioteca{
 
 
 public static void menu(){
-    System.out.println("Menu de acciones: "+"\n 1)_Nuevo Libro"+"\n 2)_Nuevo socio estudiante"+"\n 3)_Nuevo socio Docente"+
-                    "\n 4)_Prestar Libro"+"\n 5)_Devolver Libro"+"\n 6)_Cantidad de socios"+"\n 7)_Listas y datos"+"\n 8)_Que socio tiene un libro especifico");
+    System.out.println("Menu de acciones: "+"\n 1)Nuevo Libro"+"\n 2)Nuevo socio Estudiando / Docente "+"\n 4)Prestar Libro"+"\n 5)Devolver Libro"+"\n 6)Cantidad de socios"+
+                        "\n 7)Listas y datos"+"\n 8)Que socio tiene un libro especifico \n 9)Cerrar programa");
 }
 public static void menuDeListas(){
-    System.out.println("Menu de listas: \n 1)_Docentes responsables \n 2)_  
+    System.out.println("Menu de listas: \n 1)Docentes responsables \n 2)Prestamos Vencidos \n 3)Lista de socios \n 4)Lista de titulos \n 5)Lista de libros"); 
+}
+public static void mostrarUnaLista(int opcion,Biblioteca p_b){
+    switch(opcion){
+        case 1:
+            System.out.println(p_b.listaDeDocentesResponsables());
+            break;
+        case 2:
+            for(Prestamo pres : p_b.prestamosVencidos()){
+                System.out.println(pres.toString());
+            }
+            break;
+        case 3:
+             System.out.println(p_b.listaDeSocios());
+             break;
+        case 4:
+            System.out.println(p_b.listaDeTitulos());
+            break;
+        case 5:
+            System.out.println(p_b.listaDeLibros());
+            break;
+        default:
+            System.out.println("Opcion Incorrecta......");
+            break;
+    }
 }
 public static Libro buscarLibro(String tituloLibro, ArrayList<Libro> p_libros){
     Libro libroEncontrado = null;
@@ -125,6 +175,7 @@ public static Libro buscarLibro(String tituloLibro, ArrayList<Libro> p_libros){
     }
     return libroEncontrado;
 }
+
 
 
 
