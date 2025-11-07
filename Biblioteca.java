@@ -53,6 +53,8 @@ public class Biblioteca{
     private void setLibros(ArrayList<Libro> p_libros){
         this.libros = p_libros;
     }
+
+    
     /**
      * Retorna la coleccion de libros
      * @return coleccion de objetos Libro
@@ -73,6 +75,10 @@ public class Biblioteca{
      */
     public ArrayList<Socio> getSocios(){
         return this.socios;
+    }
+
+    public void eliminarSocio(Socio p_socios) {
+        this.getSocios().remove(p_socios);
     }
     /**
      * agrega un libro a la coleccion
