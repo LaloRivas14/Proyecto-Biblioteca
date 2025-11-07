@@ -43,7 +43,7 @@ public class GestioBiblioteca{
                 System.out.println("Socio que desea agregar");
                 System.out.println("Estudiante - 1");
                 System.out.println("Docente - 2");
-                System.out.print("Seleccionar una opcion: ");
+                System.out.println("Seleccionar una opcion: ");
                 int tipoS = teclado.nextInt();
                 teclado.nextLine();
 
@@ -75,6 +75,51 @@ public class GestioBiblioteca{
                 System.out.println("Seleccione una opcion correcta: ");
                 }
                 break;
+
+                
+            case 3: 
+
+                System.out.println("Seleccione una categoria para eliminar");
+                System.out.println("Socio por DNI - 1");
+                System.out.println("Libro - 2");
+                System.out.print("Seleccionar una opcion: ");
+                tipoEliminar = teclado.nextInt();
+                teclado.nextLine();
+
+            if(tipoEliminar == 1){
+
+                System.out.println("Ingrese el dni del socio a eliminar");
+                int dniSocioEliminar = teclado.nextInt();
+                Socio quitarSocio = biblioteca.buscarSocio(dniSocioEliminar);
+                if(quitarSocio != null){
+                biblioteca. eliminarSocio(quitarSocio);
+                System.out.println("El socio se ha eliminado correctamente");
+                }else{
+                System.out.println("No se encontro el socio");
+                }
+
+            }else if(tipoEliminar == 2){
+
+                        System.out.println(biblioteca.listaDeLibros());
+                        System.out.println("Ingrese el numero del libro a eliminar:");
+                        int libroEliminar = teclado.nextInt();
+                        if (libroEliminar > 0 && libroEliminar <= biblioteca.getLibros().size()) {
+                            Libro eliminarLibro = biblioteca.getLibros().get(libroEliminar - 1);
+                                if (eliminarLibro.prestado() == false) { 
+                                    biblioteca.removerLibro(eliminarLibro); 
+                                        System.out.println("El libro se ha eliminado correctamente");
+                                            }else {
+                                            System.out.println("El libro esta prestado");
+                                            }
+                            } else {
+                            System.out.println("Ingrese un numero correcto");
+                            }
+                
+} else {
+    System.out.println("Seleccione una opcion correcta");
+}
+
+break;
                 
             case 4:
                 Calendar fechaAct = Calendar.getInstance();
