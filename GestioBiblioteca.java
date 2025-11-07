@@ -51,7 +51,7 @@ public class GestioBiblioteca{
                 biblioteca.devolverLibro(libroDevolver);
                 break;
             case 6:
-                
+                System.out.print("ingrese el tipo de socio que desea 
                 
                 
         }
