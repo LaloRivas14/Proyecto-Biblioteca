@@ -21,6 +21,7 @@ public class Prestamo {
         this.setFechaRetiro(p_fechaRetiro);
         this.setSocio(p_socio);
         this.setLibro(p_libro);
+        this.setFechaDevolucion(p_fechaDevolucion);
     }
     /**
      * Constructor que inicializa un préstamo con una fecha de retiro, sin una fecha de devolución 

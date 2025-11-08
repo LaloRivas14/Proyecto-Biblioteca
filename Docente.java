@@ -10,7 +10,7 @@
 import java.util.Calendar;
 
 public class Docente extends Socio {
-    /** nombre de la carrera del estudiante */
+    /** area del docente */
     private String area;
     
     /**
@@ -54,7 +54,7 @@ public class Docente extends Socio {
      * modifica setDiasPrestamo y le agrega dias si el docente es responsable
      * @param p_dias dias que se van a agregar
      */
-    public void agregarDiasDePrestamo(int p_dias) {
+    public void cambiarDiasDePrestamos(int p_dias) {
         if (this.esResponsable()) {
             this.setDiasPrestamo(this.getDiasPrestamo() + p_dias);
         }
