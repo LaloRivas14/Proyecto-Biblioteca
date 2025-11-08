@@ -7,7 +7,7 @@
  */
 import vista.*;
 import p_biblioteca.*;
-
+import java.util.*;
 import javax.swing.*;
 
 public class Controlador {
@@ -17,7 +17,29 @@ public class Controlador {
     public Controlador(VentanaPrincipal vista) {
         this.vista = vista;
         this.biblioteca = new Biblioteca("Biblioteca Visual");
+        cargarDatosIniciales();
         inicializarEventos();
+        
+    }
+    private void cargarDatosIniciales() {
+        Calendar fecha = Calendar.getInstance();
+        fecha.set(2025, Calendar.AUGUST, 15);
+
+        // Libros
+        Libro lb1 = new Libro("Programando con Java", 5, "Curuzu", 2023);
+        Libro lb2 = new Libro("Programando con C++", 2, "Curuzu", 2002);
+        Libro lb3 = new Libro("Estructuras de Datos", 3, "AlfaOmega", 2019);
+        biblioteca.agregarLibro(lb1);
+        biblioteca.agregarLibro(lb2);
+        biblioteca.agregarLibro(lb3);
+
+        // Socios
+        biblioteca.nuevoSocioEstudiante(33091399, "Esteban Quito", "Sistemas");
+        biblioteca.nuevoSocioDocente(22091399, "Aldo Metini", "Objetos");
+
+        // Préstamos
+        biblioteca.prestarLibro(fecha, biblioteca.buscarSocio(33091399), lb1);
+        biblioteca.prestarLibro(fecha, biblioteca.buscarSocio(22091399), lb2);
     }
 
     private void inicializarEventos() {
@@ -79,4 +101,6 @@ public class Controlador {
                     vista.getAreaDatos().setText("📖 Lista de libros:\n" + biblioteca.listaDeLibros());
             });
     }
+
+    
 }
