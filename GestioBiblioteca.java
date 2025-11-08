@@ -26,18 +26,7 @@ public class GestioBiblioteca{
             switch(opcion){
                 case 1:
                     try{
-                        System.out.print("Ingrese el titulo del libro: ");
-                        String tituloLibro = teclado.nextLine();
-                        System.out.print("Ingrese el num de edicion del libro: ");
-                        int edicionLibro = teclado.nextInt();
-                        teclado.nextLine();
-                        System.out.print("Ingrese la editorial del libro: ");
-                        String editorialLibro = teclado.nextLine();
-                        System.out.print("ingrese el año del libro: ");
-                        int anioLibro = teclado.nextInt();
-                        teclado.nextLine();
-                        biblioteca.nuevoLibro(tituloLibro,edicionLibro,editorialLibro,anioLibro);
-                        System.out.println("**** Ingreso de libro exitoso ****");
+                        cargarNuevoLibro(biblioteca);
                         break;
                     }catch(Exception e){
                         teclado.nextLine();
@@ -46,41 +35,14 @@ public class GestioBiblioteca{
                     }
 
                 case 2: 
-                    System.out.println("Que tipo de Socio desea agregar: ");
-                    System.out.println("Estudiante - 1");
-                    System.out.println("Docente - 2");
-                    System.out.println("Selecciona una opcion: ");
-                    int tipoS = teclado.nextInt();
-                    teclado.nextLine();
-
-                    if(tipoS == 1){
-
-                        System.out.println("Ingrese el dni del estudiante: ");
-                        int dniEstudiante = teclado.nextInt();
+                    try{
+                        cargarNuevoSocio(biblioteca);
+                        break;
+                    }catch(Exception e){
                         teclado.nextLine();
-                        System.out.println("Ingrese el nombre y apellido del estudiante: ");
-                        String nombreEstudiante = teclado.nextLine();
-                        System.out.println("Ingrese la carrera del estudiante: ");
-                        String carreraEstudiante = teclado.nextLine();
-
-                        biblioteca.nuevoSocioEstudiante(dniEstudiante,nombreEstudiante, carreraEstudiante);
-                        System.out.println("Ingreso del estudiante exitoso");
-
-                    }else if(tipoS == 2){
-                        System.out.println("Ingrese el dni del docente: ");
-                        int dniDocente = teclado.nextInt();
-                        teclado.nextLine();
-                        System.out.println("Ingrese el nombre y apellido del docente: ");
-                        String nombreDocente = teclado.nextLine();
-                        System.out.println("Ingrese el area del docente: ");
-                        String areaDocente = teclado.nextLine();
-
-                        biblioteca.nuevoSocioDocente(dniDocente,nombreDocente, areaDocente);
-                        System.out.println("Ingreso del docente exitoso");
-                    }else{
-                        System.out.println("Seleccione una opcion correcta: ");
+                        System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO : "+ e.getMessage());
+                        break;
                     }
-                    break;
 
                 case 3: 
                     System.out.println("Seleccione una categoria para eliminar");
@@ -199,6 +161,60 @@ public class GestioBiblioteca{
 
     public static void menuDeListas(){
         System.out.println("Menu de listas: \n 1)Docentes responsables \n 2)Prestamos Vencidos \n 3)Lista de socios \n 4)Lista de titulos \n 5)Lista de libros"); 
+    }
+    
+    public static void cargarNuevoLibro(Biblioteca p_b){
+        Scanner teclado = new Scanner(System.in);
+        System.out.print("Ingrese el titulo del libro: ");
+                        String tituloLibro = teclado.nextLine();
+                        System.out.print("Ingrese el num de edicion del libro: ");
+                        int edicionLibro = teclado.nextInt();
+                        teclado.nextLine();
+                        System.out.print("Ingrese la editorial del libro: ");
+                        String editorialLibro = teclado.nextLine();
+                        System.out.print("ingrese el año del libro: ");
+                        int anioLibro = teclado.nextInt();
+                        teclado.nextLine();
+                        p_b.nuevoLibro(tituloLibro,edicionLibro,editorialLibro,anioLibro);
+                        System.out.println("**** Ingreso de libro exitoso ****");
+    }
+    
+    public static void cargarNuevoSocio( Biblioteca p_b){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Que tipo de Socio desea agregar: ");
+                    System.out.println("Estudiante - 1");
+                    System.out.println("Docente - 2");
+                    System.out.println("Selecciona una opcion: ");
+                    int tipoS = teclado.nextInt();
+                    teclado.nextLine();
+
+                    if(tipoS == 1){
+
+                        System.out.println("Ingrese el dni del estudiante: ");
+                        int dniEstudiante = teclado.nextInt();
+                        teclado.nextLine();
+                        System.out.println("Ingrese el nombre y apellido del estudiante: ");
+                        String nombreEstudiante = teclado.nextLine();
+                        System.out.println("Ingrese la carrera del estudiante: ");
+                        String carreraEstudiante = teclado.nextLine();
+
+                        p_b.nuevoSocioEstudiante(dniEstudiante,nombreEstudiante, carreraEstudiante);
+                        System.out.println("Ingreso del estudiante exitoso");
+
+                    }else if(tipoS == 2){
+                        System.out.println("Ingrese el dni del docente: ");
+                        int dniDocente = teclado.nextInt();
+                        teclado.nextLine();
+                        System.out.println("Ingrese el nombre y apellido del docente: ");
+                        String nombreDocente = teclado.nextLine();
+                        System.out.println("Ingrese el area del docente: ");
+                        String areaDocente = teclado.nextLine();
+
+                        p_b.nuevoSocioDocente(dniDocente,nombreDocente, areaDocente);
+                        System.out.println("Ingreso del docente exitoso");
+                    }else{
+                        System.out.println("Seleccione una opcion correcta: ");
+                    }
     }
 
     public static void mostrarUnaLista(int opcion,Biblioteca p_b){
