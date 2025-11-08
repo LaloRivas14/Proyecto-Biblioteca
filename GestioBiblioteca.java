@@ -46,10 +46,10 @@ public class GestioBiblioteca{
                     }
 
                 case 2: 
-                    System.out.println("Socio que desea agregar");
+                    System.out.println("Que tipo de Socio desea agregar: ");
                     System.out.println("Estudiante - 1");
                     System.out.println("Docente - 2");
-                    System.out.println("Seleccionar una opcion: ");
+                    System.out.println("Selecciona una opcion: ");
                     int tipoS = teclado.nextInt();
                     teclado.nextLine();
 
@@ -143,6 +143,7 @@ public class GestioBiblioteca{
                     System.out.println("*** Libro Prestado Con Exito ***");
                     break;
                 case 5:
+                    // falta verificacion ya que si  libroDevolver es null no se va a devolver nada va a causar exepciones
                     System.out.print("Ingrese el titulo del libro: ");
                     Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
                     biblioteca.devolverLibro(libroDevolver);
@@ -161,6 +162,7 @@ public class GestioBiblioteca{
                 case 7:
                     menuDeListas();
                     mostrarUnaLista(teclado.nextInt(),biblioteca);
+                    teclado.nextLine();
                     break;
                 case 8:
                     try{
@@ -173,7 +175,7 @@ public class GestioBiblioteca{
                         System.out.println("El o los socios que tienen el libro: "+biblioteca.quienTieneElLibro(libroEncontrar));
                         break;
                     }   catch(Exception e){
-                        System.out.println("⚠️ Error: " + e.getMessage());
+                        System.out.println(" Error: " + e.getMessage());
                         break;
                     }
 
