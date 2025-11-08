@@ -71,7 +71,7 @@ public class GestionBiblioteca{
 
                 case 4:
                     try{
-                        eliminacionDeElemento(biblioteca);
+                        prestamoLibro(biblioteca);
                         break;
                     } catch (InputMismatchException e) {
                         System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
