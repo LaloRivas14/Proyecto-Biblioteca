@@ -1,3 +1,5 @@
+package p_biblioteca;
+
 
 /**
  *Esta clase Estudiante es un subclase de la superclase(Socio).

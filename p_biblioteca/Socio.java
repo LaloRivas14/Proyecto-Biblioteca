@@ -1,3 +1,5 @@
+package p_biblioteca;
+
 
 /**
  *Clase abstracta Socio TP7.

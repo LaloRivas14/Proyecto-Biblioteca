@@ -1,3 +1,5 @@
+package p_biblioteca;
+
 
 /**
  *La clase Docente es un subclase de la clase superclase (Socio).
