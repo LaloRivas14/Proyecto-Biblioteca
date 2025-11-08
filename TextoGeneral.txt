@@ -1,0 +1,71 @@
+Herramientas y Tecnologías Utilizadas
+- Lenguaje: Java
+- Librería gráfica: Swing (javax.swing)
+- Diseño modular: Separación en paquetes vista, modelo y app
+- Estilo de diseño: GUI basada en JFrame, JPanel, JDialog, JMenuBar y JTextArea
+- Patrón de arquitectura: Modelo-Vista-Controlador (MVC)
+
+        Estructura General
+El sistema se organizó en tres capas principales:
+- Modelo (paquete modelo): contiene las clases Biblioteca, Libro, Socio, Estudiante, Docente, Prestamo y excepciones personalizadas.
+- Vista (paquete vista): contiene la interfaz gráfica, incluyendo la ventana principal y todos los diálogos modales para ingreso de datos.
+- Controlador (paquete app): conecta la vista con el modelo, gestionando eventos y lógica de interacción.
+
+                Ventana Principal
+La clase VentanaPrincipal extiende JFrame y representa la ventana principal del sistema. Está compuesta por:
+- Un área central de texto (JTextArea con JScrollPane) donde se muestran resultados, mensajes y listados.
+- Un panel lateral derecho con 8 botones que representan las acciones principales del sistema.
+- Una barra de menú superior (JMenuBar) con accesos a las funcionalidades de consulta y listado.
+
+        Botones laterales:
+- Nuevo Libro
+- Nuevo Socio
+- Eliminación
+- Prestar Libro
+- Devolver Libro
+- Cantidad de Socios
+- ¿Quién tiene un libro?
+- Cerrar Programa
+Cada botón abre un JDialog específico o ejecuta una acción directa.
+
+        Menú Superior
+El menú superior agrupa las funcionalidades de consulta bajo el menú "Listas y Datos", con las siguientes opciones:
+- Docentes responsables
+- Préstamos vencidos
+- Lista de socios
+- Lista de títulos
+- Lista de libros
+
+Cada opción actualiza el área de texto central con la información correspondiente, obtenida desde la clase Biblioteca.
+Diálogos Modales (JDialog)
+
+
+Cada acción que requiere ingreso de datos se implementó como una clase JDialog independiente, con campos de entrada, validación y botones de acción. Esto permite mantener la interfaz limpia y modular.
+
+        Diálogos implementados:
+- DialogNuevoLibro: Carga un nuevo libro con título, edición, editorial y año.
+- DialogNuevoSocio: Carga un nuevo socio, permitiendo elegir entre estudiante o docente.
+- DialogEliminar: Elimina un socio por DNI o un libro por índice.
+- DialogPrestarLibro: Registra un préstamo ingresando DNI y título del libro.
+- DialogDevolverLibro: Devuelve un libro ingresando su título.
+- DialogCantidadSocios: Muestra la cantidad de socios por tipo.
+- DialogSocioPorLibro: Muestra qué socio tiene un libro específico.
+
+Todos los diálogos están conectados al modelo mediante el Controlador, y actualizan el área de texto con mensajes claros y personalizados.
+Datos Iniciales Precargados
+
+Para facilitar las pruebas, se cargaron automáticamente al iniciar el sistema:
+- 3 libros (Java, C++, Estructuras de Datos)
+- 2 socios (1 estudiante, 1 docente)
+- 2 préstamos vencidos
+
+Esto permite probar las funcionalidades sin necesidad de ingresar datos manualmente.
+Características destacadas
+
+- Interfaz clara, intuitiva y ergonómica
+- Separación de responsabilidades (MVC)
+- Modularidad: cada acción tiene su propio diálogo
+- Validación de entradas y manejo de errores
+- Mensajes visuales con etiquetas descriptivas
+- Datos precargados para testeo inmediato
+- Fácil escalabilidad: se pueden agregar más menús, tablas o filtro
