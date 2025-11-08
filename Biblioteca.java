@@ -212,6 +212,9 @@ public class Biblioteca{
      */
     public String quienTieneElLibro(Libro p_libro) throws LibroNoPrestadoException{
         String sociosConLibro = "";
+        if(!p_libro.prestado()){
+            throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
+        }
        for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
                 //probar con == y equals
@@ -249,7 +252,7 @@ public class Biblioteca{
         int indice = 0;
         for(Socio unSocio : this.getSocios()){
             indice ++;
-            listaSocios = indice+")"+unSocio.toString()+"\n";
+            listaSocios += indice+")"+unSocio.toString()+"\n";
         }
         listaSocios += "**************************************\nCantidad de Socios del tipo estudiante: "+
         this.cantidadDeSociosPorTipo("estudiante")+"\nCantidad de Socios del tipo Docente: "+
