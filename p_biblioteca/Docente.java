@@ -1,33 +1,39 @@
 package p_biblioteca;
 
-
-/**
- *La clase Docente es un subclase de la clase superclase (Socio).
- * Esta clase modela a un Docente que a su vez es un Socio de la Biblioteca.
- * @author (pablo) 
- * @version (1.1)
+ /**
+ *La clase Docente es una subclase de Socio.
+ * Representa a un socio de la biblioteca que es docente,
+ * incorporando el atributo especifico "area" y reglas particulares
+ * sobre responsabilidad y modificacion de dias de prestamo.
+ * 
+ * @author Toledo Pablo
+ * @version 1.1
  */
 import java.util.Calendar;
 
 public class Docente extends Socio {
-    /** nombre de la carrera del estudiante */
+    /** area del docente */
     private String area;
     
     /**
-     * Constructor para instanciar un objeto docente
-     * @param p_dniSocio dni del socio docente(heredado)
-     * @param p_nombre nombre del docente(heredado)
-     * @param p_area area del docente
+     * Constructor para crear un docente como socio de biblioteca.
+     * Inicializa dni, nombre y asigna 5 dias iniciales de prestamo.
+     * Luego establece el area del docente.
+     * 
+     * @param p_dniSocio DNI del docente
+     * @param p_nombre nombre del docente
+     * @param p_area area academica del docente
      */
     public Docente(int p_dniSocio, String p_nombre, String p_area) {
         super(p_dniSocio, p_nombre, 5);
         this.setArea(p_area);
     }
     
-    /**setArea guarda el valor ingresado como parametro en la variable area*/
+    /**Guarda el área del docente. */
     private void setArea(String p_area) {
         this.area = p_area;
     }
+    
     /**@return area*/
     public String getArea() {
         return this.area;
@@ -51,10 +57,11 @@ public class Docente extends Socio {
     }
     
      /**
-     * modifica setDiasPrestamo y le agrega dias si el docente es responsable
+     * Si el docente es responsable, incrementa sus dias de prestamo.
+     * Se suman los dias recibidos como parametro.
      * @param p_dias dias que se van a agregar
      */
-    public void agregarDiasDePrestamo(int p_dias) {
+    public void cambiarDiasDePrestamos(int p_dias) {
         if (this.esResponsable()) {
             this.setDiasPrestamo(this.getDiasPrestamo() + p_dias);
         }

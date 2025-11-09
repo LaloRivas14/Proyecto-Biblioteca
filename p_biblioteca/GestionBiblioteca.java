@@ -1,25 +1,35 @@
 package p_biblioteca;
 
-
 /**
- * Write a description of class GestioBiblioteca here.
+ * La clase GestionBiblioteca representa el punto de entrada del sistema.
+ * Permite administrar una biblioteca mediante menu interactivo, ofreciendo
+ * funcionalidades como carga de libros y socios, préstamos, devoluciones,
+ * consultas y persistencia de datos en archivo.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * - Alta y baja de socios y libros
+ * - Gestión de préstamos y devoluciones
+ * - Consultas sobre socios, libros y préstamos vencidos
+ * - Guardado y lectura del estado de la biblioteca en disco
+ * 
+ * Maneja excepciones por entrada incorrecta y errores de logica.
+ * 
+ * @author Quiñonez Zoel, Rivas Lautaro, Lopez Victor, Pawlizki Micaela,  Ristovich Mauro, Toledo Pablo
+ * @version 1.0
  */
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
-public class GestioBiblioteca{
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.*;
+
+public class GestionBiblioteca implements Serializable{
+    
     public static void main(String [] args) throws LibroNoPrestadoException {
         Scanner teclado = new Scanner(System.in);
-
-        System.out.print("Ingrese el nombre que tendra la biblioteca: ");
-        String nomBiblioteca = teclado.nextLine();
-
-        Biblioteca biblioteca = new Biblioteca(nomBiblioteca);
-        cargarPrestamosVencidos(biblioteca);
-        boolean resp = true; 
+        Biblioteca biblioteca = cargarSiONo();
+        boolean resp = true;
         int opcion = 0;
         while(resp){
             menu();
@@ -49,7 +59,7 @@ public class GestioBiblioteca{
                         System.out.println(" PRESIONE ENTER PARA CONTINUAR");
                         teclado.nextLine(); // Limpia el buffer
                         break;
-                    } catch (Exception e) {
+                    } catch (Exception e) { 
                         System.out.println(" ERROR GENERAL: " + e.getMessage());
                         break;
                     }
@@ -73,7 +83,7 @@ public class GestioBiblioteca{
 
                 case 4:
                     try{
-                        eliminacionDeElemento(biblioteca);
+                        prestamoLibro(biblioteca);
                         break;
                     } catch (InputMismatchException e) {
                         System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
@@ -89,17 +99,17 @@ public class GestioBiblioteca{
                     }
                 case 5:
                     try{
-                    System.out.print("Ingrese el titulo del libro: ");
-                    Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
-                    biblioteca.devolverLibro(libroDevolver);
-                    break;
+                        System.out.print("Ingrese el titulo del libro: ");
+                        Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
+                        biblioteca.devolverLibro(libroDevolver);
+                        break;
                     } catch (InputMismatchException e) {
                         System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
                         System.out.println(" PRESIONE ENTER PARA CONTINUAR");
                         teclado.nextLine(); // Limpia el buffer
                         break;
                     } catch (NullPointerException e) {
-                        System.out.println(" ERROR: Se intentó acceder a un objeto nulo. El socio no se encontró.");
+                        System.out.println(" ERROR: libro no encontrado");
                         break;
                     } catch (Exception e) {
                         System.out.println(" ERROR GENERAL: " + e.getMessage());
@@ -117,10 +127,17 @@ public class GestioBiblioteca{
                     }
                     break;
                 case 7:
-                    menuDeListas();
-                    mostrarUnaLista(teclado.nextInt(),biblioteca);
-                    teclado.nextLine();
-                    break;
+                    try{
+                        menuDeListas();
+                        mostrarUnaLista(teclado.nextInt(),biblioteca);
+                        teclado.nextLine();
+                        break;
+                    }catch(InputMismatchException e){
+                        System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+                        System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+                        teclado.nextLine(); // Limpia el buffer
+                        break;
+                    }
                 case 8:
                     try{
                         System.out.print("Ingrese el titulo del libro: ");
@@ -144,6 +161,9 @@ public class GestioBiblioteca{
                     System.out.println("**** Cerrando Programa ***");
                     resp = false;
                     break;
+                case 10:
+                    guardarBiblioteca(biblioteca);
+                    break;
                 default:
                     System.out.println("***** Opcion ingresada incorrecta ****");
 
@@ -152,16 +172,22 @@ public class GestioBiblioteca{
         }
 
     }
-
+    
+    /** Muestra el menu principal del sistema */
     public static void menu(){
         System.out.println("Menu de acciones: "+"\n 1)Nuevo Libro"+"\n 2)Nuevo socio Estudiante / Docente \n 3)Eliminación \n 4)Prestar Libro"+"\n 5)Devolver Libro"+"\n 6)Cantidad de socios"+
-            "\n 7)Listas y datos"+"\n 8)Que socio tiene un libro especifico \n 9)Cerrar programa");
+            "\n 7)Listas y datos"+"\n 8)Que socio tiene un libro especifico \n 9)Cerrar programa \n 10)Guardar!");
     }
-
+    
+    /** Muestra el menu de consultas disponibles */
     public static void menuDeListas(){
         System.out.println("Menu de listas: \n 1)Docentes responsables \n 2)Prestamos Vencidos \n 3)Lista de socios \n 4)Lista de titulos \n 5)Lista de libros"); 
     }
 
+    /**
+     * Solicita y registra un nuevo libro en la biblioteca.
+     * @param p_b biblioteca donde se agregara el libro
+     */
     public static void cargarNuevoLibro(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         System.out.print("Ingrese el titulo del libro: ");
@@ -178,6 +204,10 @@ public class GestioBiblioteca{
         System.out.println("**** Ingreso de libro exitoso ****");
     }
 
+    /**
+     * Solicita datos y registra un nuevo socio (estudiante o docente)
+     * @param p_b biblioteca
+     */
     public static void cargarNuevoSocio( Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         System.out.println("Que tipo de Socio desea agregar: ");
@@ -215,7 +245,19 @@ public class GestioBiblioteca{
             System.out.println("Seleccione una opcion correcta: ");
         }
     }
-
+    
+    /**
+     * Realiza el flujo necesario para prestar un libro:
+     * - solicita DNI del socio
+     * - solicita titulo del libro
+     * - busca socio y libro en la biblioteca
+     * - intenta registrar el prestamo a traves de Biblioteca.prestarLibro(...)
+     *
+     * Muestra mensajes en consola segun el resultado.
+     *
+     * @param p_b biblioteca donde se realizara el prestamo
+     * @throws NullPointerException si no se encuentra el socio o el libro (manejada en el main)
+     */
     public static void prestamoLibro(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         Calendar fechaAct = Calendar.getInstance();
@@ -223,12 +265,26 @@ public class GestioBiblioteca{
         System.out.print("ingrese el dni del socio: ");
         Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
         teclado.nextLine();
+
         System.out.print("Ingrese el titulo del libro: ");
         Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
-        p_b.prestarLibro(fechaAct,socioPrestar,libroPrestar);
-        System.out.println("*** Libro Prestado Con Exito ***");
-    }
 
+        if(p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar)){
+            System.out.println("*** Libro Prestado Con Exito ***");
+        }else{
+            System.out.println("*** Libro ya Prestado O el socio no cumple los requerimientos ***");
+        }
+
+    }
+    
+    /**
+     * Elimina un socio (por DNI) o un libro (por título) segun la opcion elegida
+     * por el usuario. Si el elemento no existe, se lanza NullPointerException cuando
+     * se intenta operar sobre null (manejada en main).
+     *
+     * @param p_b biblioteca donde se realizara la eliminacion
+     * @throws InputMismatchException si el usuario ingresa un valor no numerico cuando se espera
+     */
     public static void eliminacionDeElemento(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         System.out.println("Seleccione una categoria para eliminar");
@@ -248,28 +304,30 @@ public class GestioBiblioteca{
             System.out.println("El socio se ha eliminado correctamente");
 
         }else if(tipoEliminar == 2){
-            System.out.println(p_b.listaDeLibros());
-            System.out.print("Elija el indice del libro que desea eliminar: ");
-            int libroEliminar = teclado.nextInt();
-            teclado.nextLine();
-            if (libroEliminar > 0 && libroEliminar <= p_b.getLibros().size()) {
-                Libro eliminarLibro = p_b.getLibros().get(libroEliminar - 1);
-                if (eliminarLibro.prestado() == false) { 
-                    p_b.removerLibro(eliminarLibro); 
-                    System.out.println("El libro se ha eliminado correctamente");
-                }else {
-                    System.out.println("El libro esta prestado");
-                }
-            } else {
-                System.out.println("Ingrese un numero correcto");
-            }
+            System.out.println("Ingrese el titulo del libro a eliminar: ");
+            String tituloLibro = teclado.nextLine();
+            Libro eliminarLibro = buscarLibro(tituloLibro, p_b.getLibros());
+            p_b.removerLibro(eliminarLibro);
+            System.out.println("El libro se ha eliminado correctamente");
 
         } else {
             System.out.println("Seleccione una opcion correcta");
         }
 
     }
+    
 
+    /**
+     * Muestra, segun la opcion, distintas listas informativas de la biblioteca:
+     * 1) Docentes responsables
+     * 2) Prestamos vencidos
+     * 3) Lista de socios
+     * 4) Lista de títulos
+     * 5) Lista de libros
+     *
+     * @param opcion numero de la lista a mostrar
+     * @param p_b biblioteca sobre la que se consultan los datos
+     */
     public static void mostrarUnaLista(int opcion,Biblioteca p_b){
         switch(opcion){
             case 1:
@@ -295,6 +353,13 @@ public class GestioBiblioteca{
         }
     }
 
+    /**
+     * Busca un libro por titulo dentro de una lista de libros. 
+     *
+     * @param tituloLibro titulo a buscar
+     * @param p_libros lista de libros donde buscar
+     * @return libro encontrado o null si no existe
+     */
     public static Libro buscarLibro(String tituloLibro, ArrayList<Libro> p_libros){
         Libro libroEncontrado = null;
         for(Libro libro : p_libros){
@@ -305,6 +370,12 @@ public class GestioBiblioteca{
         return libroEncontrado;
     }
 
+    /**
+     * Metodo auxiliar utilizado para cargar datos de prueba: dos libros, un estudiante
+     * y un docente, y marcarles prestamos con una fecha pasada para simular vencidos.
+     *
+     * @param b biblioteca donde se insertan los datos de prueba
+     */
     public static void cargarPrestamosVencidos(Biblioteca b){
         Calendar fecha = Calendar.getInstance();
         fecha.set(Calendar.YEAR, 2025);
@@ -324,4 +395,85 @@ public class GestioBiblioteca{
         b.prestarLibro(fecha,b.buscarSocio(22091399),lb2);
     }
 
+    /**
+     * Persiste la biblioteca pasada como parametro en el archivo "Biblioteca.dat".
+     * Si ocurre cualquier excepcion, se imprime la traza para diagnostico.
+     *
+     * @param p_biblioteca biblioteca a guardar
+     */
+    public static void guardarBiblioteca(Biblioteca p_biblioteca){
+        try {
+            FileOutputStream archivoOutput = new FileOutputStream("Biblioteca.dat");
+            ObjectOutputStream objetoOutput = new ObjectOutputStream(archivoOutput);
+
+            objetoOutput.writeObject(p_biblioteca);
+
+            objetoOutput.close();
+            System.out.println("Objeto guardado correctamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+     /**
+     * Intenta leer el objeto Biblioteca desde el archivo "Biblioteca.dat".
+     * - Si el archivo existe, devuelve la biblioteca leída.
+     * - Si no existe el archivo, solicita al usuario un nombre y crea una nueva biblioteca,
+     *   ademas carga datos de prueba mediante cargarPrestamosVencidos(...).
+     *
+     * @return Biblioteca leida o nueva, nunca null
+     */
+    public static Biblioteca leerBiblioteca() {
+
+        Biblioteca bibliotecaGuardada = null;
+        try (ObjectInputStream objetoInput = new ObjectInputStream(
+                new FileInputStream("Biblioteca.dat"))) {
+
+            bibliotecaGuardada = (Biblioteca) objetoInput.readObject();
+            System.out.println("Objeto leído desde disco!");
+
+        }catch(FileNotFoundException f){
+            Scanner teclado = new Scanner(System.in);
+            System.out.println("Archivo no encontrado");
+            System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+            String nomBiblioteca = teclado.nextLine();
+
+            bibliotecaGuardada = new Biblioteca(nomBiblioteca);
+            cargarPrestamosVencidos(bibliotecaGuardada);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer el objeto:");
+            e.printStackTrace();
+        }
+        return bibliotecaGuardada;
+    }
+
+     /**
+     * Pregunta al usuario si desea cargar la biblioteca desde archivo; si la respuesta es
+     * afirmativa llama a leerBiblioteca(), sino crea una nueva Biblioteca y carga datos
+     * de prueba mediante cargarPrestamosVencidos(...).
+     *
+     * @return Biblioteca (cargada o nueva)
+     */
+    public static Biblioteca cargarSiONo(){
+        Scanner teclado = new Scanner(System.in);
+        Biblioteca biblioteca = null;
+        System.out.print("Ingrese S si desea cargar una biblioteca, caso contrario\ningrese cualquier otro caracter: ");
+        String cargarSiONo = teclado.nextLine();
+        try{
+            if(cargarSiONo.equalsIgnoreCase("s")){
+                biblioteca = leerBiblioteca();
+            }else{
+                System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+                String nomBiblioteca = teclado.nextLine();
+
+                biblioteca = new Biblioteca(nomBiblioteca);
+                cargarPrestamosVencidos(biblioteca);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+            System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+            teclado.nextLine(); // Limpia el buffer
+        }
+        return biblioteca;
+    }
 }

@@ -1,11 +1,13 @@
 package p_biblioteca;
 
-
 /**
- *Esta clase Estudiante es un subclase de la superclase(Socio).
- *Esta clase modela a un Estudiante que a su vez es un Socio de la Biblioteca.
- * @author (pablo) 
- * @version (1.1)
+ *Esta clase Estudiante es una subclase de la superclase Socio.
+ * Modela a un socio de tipo Estudiante en la biblioteca, añadiendo el
+ * atributo específico 'carrera' y la lógica de préstamo propia para
+ * este tipo de socio.
+ * 
+ * @author Toledo Pablo
+ * @version 1.1
  */
 import java.util.Calendar;
 public class Estudiante extends Socio{
@@ -13,9 +15,11 @@ public class Estudiante extends Socio{
   private String carrera;
   
   /**
-     * Constructor para instanciar un objeto estudiante.
-     * @param p_dniSocio dni del estudiante socio(heredado)
-     * @param p_nombre nombre del estudiante socio(heredado)
+     * Constructor para crear una instancia de Estudiante.
+    * Inicializa los datos heredados de Socio (dni, nombre y dias de prestamo)
+     * y asigna la carrera del estudiante.
+     * @param p_dniSocio dni del estudiante 
+     * @param p_nombre nombre del estudiante 
      * @param p_carrera carrera del estudiante
      */
    public Estudiante(int p_dniSocio,String p_nombre,String p_carrera){
@@ -23,13 +27,13 @@ public class Estudiante extends Socio{
       this.setCarrera(p_carrera);
   }
   
-  /**setArea guarda el valor ingresado como parametro en la variable carrera*/
+  /** establece la carrera del estudiante*/
   private void setCarrera(String p_carrera){
       this.carrera = p_carrera;
   }
   
   /**@return carrera*/
-  public String getEstudiante(){
+  public String getCarrera(){
       return this.carrera;
   }
   

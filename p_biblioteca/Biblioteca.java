@@ -1,13 +1,19 @@
 package p_biblioteca;
 
- 
-
-
 /**
- * Write a description of class Biblioteca here.
+ * La clase Biblioteca representa una biblioteca que administra una colección de libros
+ * y una lista de socios (estudiantes y docentes). Permite registrar nuevos libros y socios,
+ * gestionar préstamos y devoluciones, consultar información y persistir los datos en archivo.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Provee funcionalidades como:
+ * - Alta de libros y socios
+ * - Registro y devolución de préstamos
+ * - Listados de libros y socios
+ * - Identificación de préstamos vencidos y docentes responsables
+ * - Persistencia de la biblioteca en archivo
+ * 
+ * @author Quiñonez Zoel, Rivas Lautaro, Lopez Victor
+ * @version 1.0
  */
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -18,13 +24,18 @@ import java.io.Serializable;
 import java.io.*;
 
 public class Biblioteca implements Serializable{
+    /** Nombre identificatorio de la biblioteca */
     private String nombre;
+    /** Lista que almacena todos los socios registrados */
     private ArrayList<Libro> libros;
+    /** Lista que almacena todos los libros disponibles en la biblioteca */
     private ArrayList<Socio> socios;
 
     /**
-     * Constructo con ingreso de nombre
-     * @param nombre de la biblioteca
+     * Constructor para crear un objeto Biblioteca.
+     * Inicializa las colecciones vacias y asigna un nombre identificatorio.
+     *
+     * @param p_nombre Nombre de la biblioteca.
      */
     public Biblioteca(String p_nombre){
         this.setNombre(p_nombre);
@@ -33,7 +44,7 @@ public class Biblioteca implements Serializable{
     }
 
     /**
-     * Constructo con ingreso de nombre, coleccion de libros y coleccion de socios
+     * Constructor con ingreso de nombre, coleccion de libros y coleccion de socios
      * @param nombre de la biblioteca, coleccion de libros y coleccion de socios
      */
     public Biblioteca(String p_nombre,ArrayList<Libro> p_libros,ArrayList<Socio> p_socios){
@@ -43,8 +54,9 @@ public class Biblioteca implements Serializable{
     }
 
     /**
-     * Asignacion del nombre de la biblioteca
-     * @param nombre
+     * Asigna un nombre a la biblioteca.
+     *
+     * @param p_nombre Nombre que tendra la biblioteca.
      */
     private void setNombre(String p_nombre){
         this.nombre = p_nombre;
@@ -334,6 +346,15 @@ public class Biblioteca implements Serializable{
         return listaDocentesResponsables;
     }
     
+    
+    // --- Persistencia y carga de datos --- //
+
+    /**
+     * Pregunta al usuario si desea cargar una biblioteca desde archivo.
+     * Si ingresa 'S', se intenta cargar Biblioteca.dat; si no, crea una nueva.
+     * @return biblioteca cargada o nueva
+     */
+
     public  Biblioteca cargarSiONo(){
         Scanner teclado = new Scanner(System.in);
         Biblioteca biblioteca = null;
@@ -355,6 +376,11 @@ public class Biblioteca implements Serializable{
         }
         return biblioteca;
     }
+    
+    /**
+     * Guarda la biblioteca en un archivo para persistencia.
+     * @param p_biblioteca biblioteca a guardar
+     */
     public  void guardarBiblioteca(Biblioteca p_biblioteca){
         try {
             FileOutputStream archivoOutput = new FileOutputStream("Biblioteca.dat");
@@ -368,6 +394,12 @@ public class Biblioteca implements Serializable{
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Lee la biblioteca desde el archivo Biblioteca.dat.
+     * Si no existe, pide al usuario crear una nueva.
+     * @return biblioteca cargada o nueva
+     */
 
     public  Biblioteca leerBiblioteca() {
 
