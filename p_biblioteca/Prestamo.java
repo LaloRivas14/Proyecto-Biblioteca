@@ -1,9 +1,9 @@
 package p_biblioteca;
 
-
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Prestamo {
+public class Prestamo implements Serializable{
     private Calendar fechaRetiro;
     private Calendar fechaDevolucion;
     private Socio socio;

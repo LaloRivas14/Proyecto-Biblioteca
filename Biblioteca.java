@@ -7,9 +7,13 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.*;
 
 public class Biblioteca implements Serializable{
     private String nombre;
@@ -327,4 +331,68 @@ public class Biblioteca implements Serializable{
         }
         return listaDocentesResponsables;
     }
+    
+    public  Biblioteca cargarSiONo(){
+        Scanner teclado = new Scanner(System.in);
+        Biblioteca biblioteca = null;
+        System.out.print("Ingrese S si desea cargar una biblioteca, caso contrario\ningrese cualquier otro caracter: ");
+        String cargarSiONo = teclado.nextLine();
+        try{
+            if(cargarSiONo.equalsIgnoreCase("s")){
+                biblioteca = leerBiblioteca();
+            }else{
+                System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+                String nomBiblioteca = teclado.nextLine();
+
+                biblioteca = new Biblioteca(nomBiblioteca);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+            System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+            teclado.nextLine(); // Limpia el buffer
+        }
+        return biblioteca;
+    }
+    public  void guardarBiblioteca(Biblioteca p_biblioteca){
+        try {
+            FileOutputStream archivoOutput = new FileOutputStream("Biblioteca.dat");
+            ObjectOutputStream objetoOutput = new ObjectOutputStream(archivoOutput);
+
+            objetoOutput.writeObject(p_biblioteca);
+
+            objetoOutput.close();
+            System.out.println("Objeto guardado correctamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  Biblioteca leerBiblioteca() {
+
+        Biblioteca bibliotecaGuardada = null;
+        try (ObjectInputStream objetoInput = new ObjectInputStream(
+                new FileInputStream("Biblioteca.dat"))) {
+
+            bibliotecaGuardada = (Biblioteca) objetoInput.readObject();
+            System.out.println("Objeto leído desde disco!");
+
+        }catch(FileNotFoundException f){
+            Scanner teclado = new Scanner(System.in);
+            System.out.println("Archivo no encontrado");
+            System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+            String nomBiblioteca = teclado.nextLine();
+
+            bibliotecaGuardada = new Biblioteca(nomBiblioteca);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer el objeto:");
+            e.printStackTrace();
+        }
+        return bibliotecaGuardada;
+    }
+    
+    
 }
+
+
+
+

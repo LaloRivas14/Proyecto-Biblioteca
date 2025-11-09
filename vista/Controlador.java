@@ -1,6 +1,5 @@
 package vista;
 
-
 /**
  * Write a description of class controlador here.
  * 
@@ -16,13 +15,21 @@ public class Controlador {
     private VentanaPrincipal vista;
     private Biblioteca biblioteca;
 
-    public Controlador(VentanaPrincipal vista) {
+    public Controlador(VentanaPrincipal vista, boolean cargarDesdeArchivo) {
         this.vista = vista;
-        this.biblioteca = new Biblioteca("Biblioteca Visual");
-        cargarDatosIniciales();
+
+        if (cargarDesdeArchivo) {
+            this.biblioteca = PersistenciaBiblioteca.leerBiblioteca();
+            vista.getAreaDatos().setText("📂 Biblioteca cargada desde archivo.");
+        } else {
+            this.biblioteca = new Biblioteca("Biblioteca Visual");
+            cargarDatosIniciales();
+            vista.getAreaDatos().setText("📘 Biblioteca iniciada con datos precargados.");
+        }
+
         inicializarEventos();
-        
     }
+
     private void cargarDatosIniciales() {
         Calendar fecha = Calendar.getInstance();
         fecha.set(2025, Calendar.AUGUST, 15);
@@ -37,7 +44,7 @@ public class Controlador {
 
         // Socios
         biblioteca.nuevoSocioEstudiante(33091399, "Esteban Quito", "Sistemas");
-        biblioteca.nuevoSocioDocente(22091399, "Aldo Metini", "Objetos");
+        biblioteca.nuevoSocioDocente(22091399, "Alfredo Guzman", "Objetos");
 
         // Préstamos
         biblioteca.prestarLibro(fecha, biblioteca.buscarSocio(33091399), lb1);
@@ -74,7 +81,7 @@ public class Controlador {
             });
 
         vista.getBtnCerrar().addActionListener(e -> {
-                    JOptionPane.showMessageDialog(vista, "Cerrando programa...");
+                    JOptionPane.showMessageDialog(vista,"Cerrando programa...");
                     System.exit(0);
             });
 
@@ -102,7 +109,16 @@ public class Controlador {
         vista.getItemLibros().addActionListener(e -> {
                     vista.getAreaDatos().setText("📖 Lista de libros:\n" + biblioteca.listaDeLibros());
             });
+        
+        vista.getItemGuardar().addActionListener(e -> {
+                    PersistenciaBiblioteca.guardarBiblioteca(biblioteca);
+                    vista.getAreaDatos().setText("✅ Biblioteca guardada correctamente.");
+            });
+
+        vista.getItemCargar().addActionListener(e -> {
+                    biblioteca = PersistenciaBiblioteca.leerBiblioteca();
+                    vista.getAreaDatos().setText("📂 Biblioteca cargada desde archivo.");
+            });
     }
 
-    
 }

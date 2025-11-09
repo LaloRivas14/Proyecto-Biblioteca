@@ -1,6 +1,7 @@
 package p_biblioteca;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Representa un libro dentro del sistema de gestion de biblioteca.
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @author Pawlizki Micaela
  * @version 1.0
  */
-public class Libro{
+public class Libro implements Serializable{
     /** Titulo del libro */
     private String titulo;
     /** Numero de edicion del libro */

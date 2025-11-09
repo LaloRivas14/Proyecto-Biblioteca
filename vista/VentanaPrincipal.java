@@ -12,7 +12,7 @@ import java.awt.*;
 public class VentanaPrincipal extends JFrame {
     private JTextArea areaDatos;
     private JButton btnNuevoLibro, btnNuevoSocio, btnEliminar, btnPrestar, btnDevolver, btnCantidadSocios, btnSocioPorLibro, btnCerrar;
-    private JMenuItem itemDocentes, itemVencidos, itemSocios, itemTitulos, itemLibros;
+    private JMenuItem itemDocentes, itemVencidos, itemSocios, itemTitulos, itemLibros,itemGuardar,itemCargar;
     
     public VentanaPrincipal() {
         setTitle("Sistema de Biblioteca");
@@ -55,19 +55,28 @@ public class VentanaPrincipal extends JFrame {
         // Menú superior
         JMenuBar barraMenu = new JMenuBar();
         JMenu menuListas = new JMenu("Listas y Datos");
+        JMenu menuGuardados = new JMenu("Guardados y Carga");
 
         itemDocentes = new JMenuItem("Docentes responsables");
         itemVencidos = new JMenuItem("Préstamos vencidos");
         itemSocios = new JMenuItem("Lista de socios");
         itemTitulos = new JMenuItem("Lista de títulos");
         itemLibros = new JMenuItem("Lista de libros");
+        
+        itemGuardar = new JMenuItem("Guardar biblioteca");
+        itemCargar = new JMenuItem("Cargar biblioteca");
 
         menuListas.add(itemDocentes);
         menuListas.add(itemVencidos);
         menuListas.add(itemSocios);
         menuListas.add(itemTitulos);
         menuListas.add(itemLibros);
+        
+        menuGuardados.add(itemGuardar);
+        menuGuardados.add(itemCargar);
+        
         barraMenu.add(menuListas);
+        barraMenu.add(menuGuardados);
         setJMenuBar(barraMenu);
     }
 
@@ -100,4 +109,8 @@ public class VentanaPrincipal extends JFrame {
     public JMenuItem getItemTitulos() { return itemTitulos; }
 
     public JMenuItem getItemLibros() { return itemLibros; }
+    
+    public JMenuItem getItemGuardar() { return itemGuardar; }
+    
+    public JMenuItem getItemCargar() { return itemCargar; }
 }
