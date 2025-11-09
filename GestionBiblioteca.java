@@ -97,7 +97,7 @@ public class GestionBiblioteca{
                         teclado.nextLine(); // Limpia el buffer
                         break;
                     } catch (NullPointerException e) {
-                        System.out.println(" ERROR: Se intentó acceder a un objeto nulo. El socio no se encontró.");
+                        System.out.println(" ERROR: libro no encontrado");
                         break;
                     } catch (Exception e) {
                         System.out.println(" ERROR GENERAL: " + e.getMessage());
@@ -217,14 +217,22 @@ public class GestionBiblioteca{
     public static void prestamoLibro(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         Calendar fechaAct = Calendar.getInstance();
-
-        System.out.print("ingrese el dni del socio: ");
-        Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
-        teclado.nextLine();
-        System.out.print("Ingrese el titulo del libro: ");
-        Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
-        p_b.prestarLibro(fechaAct,socioPrestar,libroPrestar);
-        System.out.println("*** Libro Prestado Con Exito ***");
+        
+        try{
+            System.out.print("ingrese el dni del socio: ");
+            Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
+            teclado.nextLine();
+            
+            System.out.print("Ingrese el titulo del libro: ");
+            Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
+            
+            p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar);
+            System.out.println("*** Libro Prestado Con Exito ***");
+        }catch(NullPointerException e){
+            System.out.println(" ERROR: socio o libro inexistente");
+        }catch (Exception e) {
+        System.out.println(" ERROR GENERAL: " + e.getMessage());
+       }
     }
 
     public static void eliminacionDeElemento(Biblioteca p_b){
