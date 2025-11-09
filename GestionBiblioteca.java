@@ -218,7 +218,6 @@ public class GestionBiblioteca{
         Scanner teclado = new Scanner(System.in);
         Calendar fechaAct = Calendar.getInstance();
         
-        try{
             System.out.print("ingrese el dni del socio: ");
             Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
             teclado.nextLine();
@@ -226,13 +225,13 @@ public class GestionBiblioteca{
             System.out.print("Ingrese el titulo del libro: ");
             Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
             
-            p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar);
-            System.out.println("*** Libro Prestado Con Exito ***");
-        }catch(NullPointerException e){
-            System.out.println(" ERROR: socio o libro inexistente");
-        }catch (Exception e) {
-        System.out.println(" ERROR GENERAL: " + e.getMessage());
-       }
+            if(p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar)){
+                System.out.println("*** Libro Prestado Con Exito ***");
+            }else{
+                System.out.println("*** Libro ya Prestado O el socio no cumple los requerimientos ***");
+            }
+            
+       
     }
 
     public static void eliminacionDeElemento(Biblioteca p_b){
