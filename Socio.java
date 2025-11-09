@@ -6,7 +6,9 @@
  */
 import java.util.ArrayList;
 import java.util.Calendar;
-public abstract class Socio 
+import java.io.Serializable;
+
+public abstract class Socio implements Serializable 
 {
     private int dniSocio;
     private String nombre;

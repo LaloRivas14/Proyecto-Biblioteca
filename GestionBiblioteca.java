@@ -8,16 +8,16 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
-public class GestionBiblioteca{
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.*;
+
+public class GestionBiblioteca implements Serializable{
     public static void main(String [] args) throws LibroNoPrestadoException {
         Scanner teclado = new Scanner(System.in);
-
-        System.out.print("Ingrese el nombre que tendra la biblioteca: ");
-        String nomBiblioteca = teclado.nextLine();
-
-        Biblioteca biblioteca = new Biblioteca(nomBiblioteca);
-        cargarPrestamosVencidos(biblioteca);
-        boolean resp = true; 
+        Biblioteca biblioteca = cargarSiONo();
+        boolean resp = true;
         int opcion = 0;
         while(resp){
             menu();
@@ -87,10 +87,10 @@ public class GestionBiblioteca{
                     }
                 case 5:
                     try{
-                    System.out.print("Ingrese el titulo del libro: ");
-                    Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
-                    biblioteca.devolverLibro(libroDevolver);
-                    break;
+                        System.out.print("Ingrese el titulo del libro: ");
+                        Libro libroDevolver = buscarLibro(teclado.nextLine(),biblioteca.getLibros());
+                        biblioteca.devolverLibro(libroDevolver);
+                        break;
                     } catch (InputMismatchException e) {
                         System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
                         System.out.println(" PRESIONE ENTER PARA CONTINUAR");
@@ -142,6 +142,9 @@ public class GestionBiblioteca{
                     System.out.println("**** Cerrando Programa ***");
                     resp = false;
                     break;
+                case 10:
+                    guardarBiblioteca(biblioteca);
+                    break;
                 default:
                     System.out.println("***** Opcion ingresada incorrecta ****");
 
@@ -153,7 +156,7 @@ public class GestionBiblioteca{
 
     public static void menu(){
         System.out.println("Menu de acciones: "+"\n 1)Nuevo Libro"+"\n 2)Nuevo socio Estudiante / Docente \n 3)Eliminación \n 4)Prestar Libro"+"\n 5)Devolver Libro"+"\n 6)Cantidad de socios"+
-            "\n 7)Listas y datos"+"\n 8)Que socio tiene un libro especifico \n 9)Cerrar programa");
+            "\n 7)Listas y datos"+"\n 8)Que socio tiene un libro especifico \n 9)Cerrar programa \n 10)Guardar!");
     }
 
     public static void menuDeListas(){
@@ -322,4 +325,57 @@ public class GestionBiblioteca{
         b.prestarLibro(fecha,b.buscarSocio(22091399),lb2);
     }
 
+    public static void guardarBiblioteca(Biblioteca p_biblioteca){
+        try {
+            FileOutputStream archivoOutput = new FileOutputStream("Biblioteca.dat");
+            ObjectOutputStream objetoOutput = new ObjectOutputStream(archivoOutput);
+
+            objetoOutput.writeObject(p_biblioteca);
+
+            objetoOutput.close();
+            System.out.println("Objeto guardado correctamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Biblioteca leerBiblioteca() {
+        Biblioteca bibliotecaGuardada = null;
+        try (ObjectInputStream objetoInput = new ObjectInputStream(
+                new FileInputStream("Biblioteca.dat"))) {
+
+            bibliotecaGuardada = (Biblioteca) objetoInput.readObject();
+            System.out.println("Objeto leído desde disco!");
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer el objeto:");
+            e.printStackTrace();
+        } catch (FileNotFoundException e){
+            
+        }
+        return bibliotecaGuardada;
+    }
+
+    public static Biblioteca cargarSiONo(){
+        Scanner teclado = new Scanner(System.in);
+        Biblioteca biblioteca = null;
+        System.out.print("Ingrese S si desea cargar una biblioteca, caso contrario\ningrese cualquier otro caracter: ");
+        String cargarSiONo = teclado.nextLine();
+        try{
+            if(cargarSiONo.equalsIgnoreCase("s")){
+                biblioteca = leerBiblioteca();
+            }else{
+                System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+                String nomBiblioteca = teclado.nextLine();
+
+                biblioteca = new Biblioteca(nomBiblioteca);
+                cargarPrestamosVencidos(biblioteca);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+            System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+            teclado.nextLine(); // Limpia el buffer
+        }
+        return biblioteca;
+    }
 }

@@ -6,12 +6,12 @@
  * 
  * @author (your name) 
  * @version (a version number or a date)
- * Hola lalo
  */
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.io.Serializable;
 
-public class Biblioteca{
+public class Biblioteca implements Serializable{
     private String nombre;
     private ArrayList<Libro> libros;
     private ArrayList<Socio> socios;
