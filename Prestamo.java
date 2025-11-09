@@ -21,6 +21,7 @@ public class Prestamo implements Serializable{
         this.setFechaRetiro(p_fechaRetiro);
         this.setSocio(p_socio);
         this.setLibro(p_libro);
+        this.setFechaDevolucion(p_fechaDevolucion);
     }
 
     /**

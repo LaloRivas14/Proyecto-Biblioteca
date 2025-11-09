@@ -23,13 +23,13 @@ public class Estudiante extends Socio{
       this.setCarrera(p_carrera);
   }
   
-  /**setArea guarda el valor ingresado como parametro en la variable carrera*/
+  /**setCarrera guarda el valor ingresado como parametro en la variable carrera*/
   private void setCarrera(String p_carrera){
       this.carrera = p_carrera;
   }
   
   /**@return carrera*/
-  public String getEstudiante(){
+  public String getCarrera(){
       return this.carrera;
   }
   

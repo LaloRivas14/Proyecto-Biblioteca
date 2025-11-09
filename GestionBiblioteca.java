@@ -97,7 +97,7 @@ public class GestionBiblioteca implements Serializable{
                         teclado.nextLine(); // Limpia el buffer
                         break;
                     } catch (NullPointerException e) {
-                        System.out.println(" ERROR: Se intentó acceder a un objeto nulo. El socio no se encontró.");
+                        System.out.println(" ERROR: libro no encontrado");
                         break;
                     } catch (Exception e) {
                         System.out.println(" ERROR GENERAL: " + e.getMessage());
@@ -115,10 +115,17 @@ public class GestionBiblioteca implements Serializable{
                     }
                     break;
                 case 7:
+                    try{
                     menuDeListas();
                     mostrarUnaLista(teclado.nextInt(),biblioteca);
                     teclado.nextLine();
                     break;
+                }catch(InputMismatchException e){
+                    System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+                    System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+                    teclado.nextLine(); // Limpia el buffer
+                    break;
+                }
                 case 8:
                     try{
                         System.out.print("Ingrese el titulo del libro: ");
@@ -220,14 +227,21 @@ public class GestionBiblioteca implements Serializable{
     public static void prestamoLibro(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         Calendar fechaAct = Calendar.getInstance();
-
-        System.out.print("ingrese el dni del socio: ");
-        Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
-        teclado.nextLine();
-        System.out.print("Ingrese el titulo del libro: ");
-        Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
-        p_b.prestarLibro(fechaAct,socioPrestar,libroPrestar);
-        System.out.println("*** Libro Prestado Con Exito ***");
+        
+            System.out.print("ingrese el dni del socio: ");
+            Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
+            teclado.nextLine();
+            
+            System.out.print("Ingrese el titulo del libro: ");
+            Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
+            
+            if(p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar)){
+                System.out.println("*** Libro Prestado Con Exito ***");
+            }else{
+                System.out.println("*** Libro ya Prestado O el socio no cumple los requerimientos ***");
+            }
+            
+       
     }
 
     public static void eliminacionDeElemento(Biblioteca p_b){
@@ -249,21 +263,11 @@ public class GestionBiblioteca implements Serializable{
             System.out.println("El socio se ha eliminado correctamente");
 
         }else if(tipoEliminar == 2){
-            System.out.println(p_b.listaDeLibros());
-            System.out.print("Elija el indice del libro que desea eliminar: ");
-            int libroEliminar = teclado.nextInt();
-            teclado.nextLine();
-            if (libroEliminar > 0 && libroEliminar <= p_b.getLibros().size()) {
-                Libro eliminarLibro = p_b.getLibros().get(libroEliminar - 1);
-                if (eliminarLibro.prestado() == false) { 
-                    p_b.removerLibro(eliminarLibro); 
-                    System.out.println("El libro se ha eliminado correctamente");
-                }else {
-                    System.out.println("El libro esta prestado");
-                }
-            } else {
-                System.out.println("Ingrese un numero correcto");
-            }
+            System.out.println("Ingrese el titulo del libro a eliminar: ");
+            String tituloLibro = teclado.nextLine();
+            Libro eliminarLibro = buscarLibro(tituloLibro, p_b.getLibros());
+            p_b.removerLibro(eliminarLibro);
+            System.out.println("El libro se ha eliminado correctamente");
 
         } else {
             System.out.println("Seleccione una opcion correcta");

@@ -43,9 +43,13 @@ public class DialogPrestarLibro extends JDialog {
 
                 if (libro != null && socio != null) {
                     Calendar fecha = Calendar.getInstance();
-                    biblioteca.prestarLibro(fecha, socio, libro);
-                    areaDatos.setText("📚 Libro prestado con éxito:\n" + libro.getTitulo() + " a " + socio.getNombre());
-                    dispose();
+                    if(biblioteca.prestarLibro(fecha, socio, libro)){
+                        areaDatos.setText("📚 Libro prestado con éxito:\n" + libro.getTitulo() + " a " + socio.getNombre());
+                        dispose();
+                    }else {
+                        areaDatos.setText("📚 Libro ya prestado o Socio no cumple los requerimentos para un prestamo");
+                    }
+                    
                 } else {
                     areaDatos.setText("❌ Socio o libro no encontrado.");
                 }

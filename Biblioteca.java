@@ -227,20 +227,24 @@ public class Biblioteca implements Serializable{
      * @param p_libro libro que se quiere saber si esta prestado o disponible.
      */
     public String quienTieneElLibro(Libro p_libro) throws LibroNoPrestadoException{
-        String sociosConLibro = "";
+        //si el libro no esta prestado tira la excepcion
+        if(!p_libro.prestado()){
+            throw new LibroNoPrestadoException("el libro se encuentra en la biblioteca");
+        }
         
+        //buscar en todos los socios 
         for (Socio unSocio : this.getSocios()) {
             for (Prestamo unPrestamo : unSocio.getPrestamos()) {
-                //probar con == y equals
-                if (p_libro == unPrestamo.getLibro()) {
-                    sociosConLibro += "/ "+ unPrestamo.getSocio().getNombre();
-                }else if(!p_libro.prestado()){
-                    throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
-                }
+                //si encontramos un prestamo del libro y no fue devuelto 
+                if (unPrestamo.getLibro() == p_libro && unPrestamo.getFechaDevolucion() == null){
+                    //lo tiene este socio 
+                   return unSocio.getNombre();
             }
         }
-        return sociosConLibro;
-    }      
+        } 
+        //si no se encontro tira la excepcion
+        throw new LibroNoPrestadoException("El libro se encuentra en la biblioteca");
+    }
 
     /**
      * Devuelve el Socio que tiene el dni pasado como parámetro, o null si no lo encuentra.
@@ -319,7 +323,7 @@ public class Biblioteca implements Serializable{
         int indice = 0;
         for(Socio unSocio : this.docentesResponsables()){
             indice ++;
-            listaDocentesResponsables = indice+")"+unSocio.toString()+"\n";
+            listaDocentesResponsables += indice + ")" + unSocio.toString() + "\n";
         }
         return listaDocentesResponsables;
     }
