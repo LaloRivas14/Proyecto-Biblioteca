@@ -116,16 +116,16 @@ public class GestionBiblioteca implements Serializable{
                     break;
                 case 7:
                     try{
-                    menuDeListas();
-                    mostrarUnaLista(teclado.nextInt(),biblioteca);
-                    teclado.nextLine();
-                    break;
-                }catch(InputMismatchException e){
-                    System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
-                    System.out.println(" PRESIONE ENTER PARA CONTINUAR");
-                    teclado.nextLine(); // Limpia el buffer
-                    break;
-                }
+                        menuDeListas();
+                        mostrarUnaLista(teclado.nextInt(),biblioteca);
+                        teclado.nextLine();
+                        break;
+                    }catch(InputMismatchException e){
+                        System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+                        System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+                        teclado.nextLine(); // Limpia el buffer
+                        break;
+                    }
                 case 8:
                     try{
                         System.out.print("Ingrese el titulo del libro: ");
@@ -227,23 +227,21 @@ public class GestionBiblioteca implements Serializable{
     public static void prestamoLibro(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         Calendar fechaAct = Calendar.getInstance();
-        
-            System.out.print("ingrese el dni del socio: ");
-            Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
-            teclado.nextLine();
-            
-            System.out.print("Ingrese el titulo del libro: ");
-            Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
-            
-            if(p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar)){
-                System.out.println("*** Libro Prestado Con Exito ***");
-            }else{
-                System.out.println("*** Libro ya Prestado O el socio no cumple los requerimientos ***");
-            }
-            
-       
-    }
 
+        System.out.print("ingrese el dni del socio: ");
+        Socio socioPrestar = p_b.buscarSocio(teclado.nextInt());
+        teclado.nextLine();
+
+        System.out.print("Ingrese el titulo del libro: ");
+        Libro libroPrestar = buscarLibro(teclado.nextLine(),p_b.getLibros());
+
+        if(p_b.prestarLibro(fechaAct, socioPrestar, libroPrestar)){
+            System.out.println("*** Libro Prestado Con Exito ***");
+        }else{
+            System.out.println("*** Libro ya Prestado O el socio no cumple los requerimientos ***");
+        }
+
+    }
     public static void eliminacionDeElemento(Biblioteca p_b){
         Scanner teclado = new Scanner(System.in);
         System.out.println("Seleccione una categoria para eliminar");
@@ -344,6 +342,7 @@ public class GestionBiblioteca implements Serializable{
     }
 
     public static Biblioteca leerBiblioteca() {
+
         Biblioteca bibliotecaGuardada = null;
         try (ObjectInputStream objetoInput = new ObjectInputStream(
                 new FileInputStream("Biblioteca.dat"))) {
@@ -351,11 +350,17 @@ public class GestionBiblioteca implements Serializable{
             bibliotecaGuardada = (Biblioteca) objetoInput.readObject();
             System.out.println("Objeto leído desde disco!");
 
+        }catch(FileNotFoundException f){
+            Scanner teclado = new Scanner(System.in);
+            System.out.println("Archivo no encontrado");
+            System.out.print("Ingrese el nombre que tendra la biblioteca: ");
+            String nomBiblioteca = teclado.nextLine();
+
+            bibliotecaGuardada = new Biblioteca(nomBiblioteca);
+            cargarPrestamosVencidos(bibliotecaGuardada);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al leer el objeto:");
             e.printStackTrace();
-        } catch (FileNotFoundException e){
-            
         }
         return bibliotecaGuardada;
     }
