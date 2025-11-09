@@ -115,10 +115,17 @@ public class GestionBiblioteca{
                     }
                     break;
                 case 7:
+                    try{
                     menuDeListas();
                     mostrarUnaLista(teclado.nextInt(),biblioteca);
                     teclado.nextLine();
                     break;
+                }catch(InputMismatchException e){
+                    System.out.println(" ERROR DE INGRESO DE DATO INCORRECTO: " + e.getMessage());
+                    System.out.println(" PRESIONE ENTER PARA CONTINUAR");
+                    teclado.nextLine(); // Limpia el buffer
+                    break;
+                }
                 case 8:
                     try{
                         System.out.print("Ingrese el titulo del libro: ");
