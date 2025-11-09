@@ -253,21 +253,11 @@ public class GestionBiblioteca{
             System.out.println("El socio se ha eliminado correctamente");
 
         }else if(tipoEliminar == 2){
-            System.out.println(p_b.listaDeLibros());
-            System.out.print("Elija el indice del libro que desea eliminar: ");
-            int libroEliminar = teclado.nextInt();
-            teclado.nextLine();
-            if (libroEliminar > 0 && libroEliminar <= p_b.getLibros().size()) {
-                Libro eliminarLibro = p_b.getLibros().get(libroEliminar - 1);
-                if (eliminarLibro.prestado() == false) { 
-                    p_b.removerLibro(eliminarLibro); 
-                    System.out.println("El libro se ha eliminado correctamente");
-                }else {
-                    System.out.println("El libro esta prestado");
-                }
-            } else {
-                System.out.println("Ingrese un numero correcto");
-            }
+            System.out.println("Ingrese el titulo del libro a eliminar: ");
+            String tituloLibro = teclado.nextLine();
+            Libro eliminarLibro = buscarLibro(tituloLibro, p_b.getLibros());
+            p_b.removerLibro(eliminarLibro);
+            System.out.println("El libro se ha eliminado correctamente");
 
         } else {
             System.out.println("Seleccione una opcion correcta");
