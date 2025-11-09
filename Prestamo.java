@@ -1,13 +1,29 @@
-
+/**
+ * La clase Prestamo modela el acto de prestar un libro a un socio dentro del sistema de biblioteca.
+ * Guarda la fecha en que se retira el libro, la fecha de devolución (si ya fue devuelto),
+ * el socio que efectuó el préstamo y el libro asociado.
+ *
+ * Permite verificar si el préstamo está vencido comparando la fecha actual con la fecha límite 
+ * calculada según los días de préstamo del socio.
+ * 
+ * @author Ristovich Mauro
+ * @version 1.0
+ */
 
 import java.util.Calendar;
 import java.io.Serializable;
 
 public class Prestamo implements Serializable{
+     /** Fecha en la que el libro fue retirado */
     private Calendar fechaRetiro;
+    /** Fecha en la que el libro fue devuelto */
     private Calendar fechaDevolucion;
+    /** Socio que realiza el prestamo */
     private Socio socio;
+    /** Libro prestado */
     private Libro libro;
+    
+    
     /**
      * Constructor que inicializa un préstamo con una fecha de retiro, fecha de devolución, 
      * el socio que realiza el préstamo y el libro prestado.

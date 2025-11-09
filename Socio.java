@@ -1,19 +1,34 @@
  
-
-
 /**
- *Clase abstracta Socio TP7.
+ ** Representa un socio de la biblioteca dentro del sistema de gestion.
+ * Es una clase abstracta que modela los datos y comportamientos basicos
+ * de cualquier tipo de socio, como DNI, nombre, dias permitidos de prestamo
+ * y la lista de prestamos realizados.
+ * 
+ * Permite agregar y quitar prestamos, verificar si el socio puede pedir
+ * nuevos prestamos y obtener informacion general del mismo.
+ * 
+ * Las clases hijas deben implementar el metodo soyDeLaClase()
+ * para indicar el tipo de socio.
+ * 
+ * @author Ristovich Mauro
+ * @version 1.0
  */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.Serializable;
 
-public abstract class Socio implements Serializable 
-{
+public abstract class Socio implements Serializable {
+     /** DNI del socio */
     private int dniSocio;
+    /** Nombre del socio */
     private String nombre;
+    /** Cantidad de dias permitidos para el prestamo de libros */
     private int diasPrestamo;
+    /** Lista de prestamos asociados al socio */
     private ArrayList<Prestamo> prestamos;
+    
+    
     /**
      * Constructor que inicializa un socio con DNI, nombre, días de préstamo y una lista de préstamos 
      * La lista de préstamos se establece a partir del parámetro.
@@ -29,6 +44,7 @@ public abstract class Socio implements Serializable
         this.setDiasPrestamo(p_diasPrestamo);
         this.setPrestamos(p_prestamos);
     }
+    
     /**
      * Constructor que inicializa un socio con DNI, nombre, días de préstamo y una lista de préstamos vacía.
      * @param p_dniSocio el DNI del socio
@@ -41,6 +57,7 @@ public abstract class Socio implements Serializable
         this.setDiasPrestamo(p_diasPrestamo);
         this.setPrestamos(new ArrayList<Prestamo>());
     }
+    
     /**
      * Establece el DNI del socio.
      * 
@@ -48,7 +65,8 @@ public abstract class Socio implements Serializable
      */
      private void setDniSocio(int p_dniSocio){
          this.dniSocio = p_dniSocio;
-        }
+    }
+    
         /**
      * Establece el nombre del socio.
      * 
@@ -57,6 +75,7 @@ public abstract class Socio implements Serializable
     private void setNombre(String p_nombre){
         this.nombre = p_nombre;
     }
+    
     /**
      * Establece los días de préstamo permitidos para el socio.
      * 
@@ -65,6 +84,7 @@ public abstract class Socio implements Serializable
     protected void setDiasPrestamo(int p_diasPrestamo){
         this.diasPrestamo = p_diasPrestamo;
     }
+    
     /**
      * Establece la lista de préstamos del socio.
      * 
@@ -73,6 +93,7 @@ public abstract class Socio implements Serializable
     private void setPrestamos(ArrayList<Prestamo> p_prestamos){
         this.prestamos = p_prestamos;
     }
+    
     /**
      * Obtiene el DNI del socio.
      * 
@@ -81,6 +102,7 @@ public abstract class Socio implements Serializable
     public int getDniSocio(){
         return this.dniSocio;
     }
+    
     /**
      * Obtiene el nombre del socio.
      * 
@@ -89,6 +111,7 @@ public abstract class Socio implements Serializable
     public String getNombre(){
         return this.nombre;
     }
+    
     /**
      * Obtiene los días de préstamo permitidos para el socio.
      * 
@@ -97,6 +120,7 @@ public abstract class Socio implements Serializable
     public int getDiasPrestamo(){
         return this.diasPrestamo;
     }
+    
     /**
      * Obtiene la lista de préstamos activos del socio.
      * 
@@ -105,6 +129,7 @@ public abstract class Socio implements Serializable
     public ArrayList<Prestamo> getPrestamos(){
         return this.prestamos;
     }
+    
     /**
      * Agrega un préstamo a la lista de préstamos del socio.
      * 
@@ -114,6 +139,7 @@ public abstract class Socio implements Serializable
     public boolean agregarPrestamo(Prestamo p_prestamo){
         return this.getPrestamos().add(p_prestamo);
     }
+    
     /**
      * Elimina un préstamo de la lista de préstamos del socio.
      * 
@@ -123,6 +149,7 @@ public abstract class Socio implements Serializable
     public boolean quitarPrestamo(Prestamo p_prestamo){ 
          return this.getPrestamos().remove(p_prestamo);
     }
+    
     /**
      * Devuelve la cantidad de libros actualmente prestados al socio.
      * 
@@ -137,6 +164,7 @@ public abstract class Socio implements Serializable
      }
         return prestados;
     }
+    
     /**
      * Devuelve una representación en cadena del socio, incluyendo su DNI, nombre, tipo de socio y cantidad de libros prestados.
      * 
@@ -146,6 +174,7 @@ public abstract class Socio implements Serializable
         return ("DNI:" + this.getDniSocio() + " || " + this.getNombre() + 
         " (" + this.soyDeLaClase() + ") || Libros Prestados: " + this.cantLibrosPrestados());
     }
+    
     /**
      * Verifica si el socio puede solicitar más préstamos, basado en si tiene préstamos vencidos.
      * 
@@ -160,6 +189,7 @@ public abstract class Socio implements Serializable
         }
         return true;
     }
+    
     /**
      * Método abstracto que debe ser implementado por las clases hijas para devolver el tipo de socio.
      * 
