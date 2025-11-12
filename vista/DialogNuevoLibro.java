@@ -2,10 +2,8 @@ package vista;
 
 
 /**
- * Write a description of class DialogNuevoLibro here.
+ * Tipo Dialog que se presenta al presionar el boton NuevoLibro
  * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +44,7 @@ public class DialogNuevoLibro extends JDialog {
                 int anio = Integer.parseInt(campoAnio.getText());
 
                 biblioteca.nuevoLibro(titulo, edicion, editorial, anio);
-                areaDatos.setText("📘 Libro agregado correctamente:\n" + titulo);
+                areaDatos.setText(" Libro agregado correctamente:\n" + titulo);
                 dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());

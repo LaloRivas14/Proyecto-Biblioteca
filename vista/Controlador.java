@@ -45,6 +45,7 @@ public class Controlador {
         // Socios
         biblioteca.nuevoSocioEstudiante(33091399, "Esteban Quito", "Sistemas");
         biblioteca.nuevoSocioDocente(22091399, "Alfredo Guzman", "Objetos");
+        
 
         // Préstamos
         biblioteca.prestarLibro(fecha, biblioteca.buscarSocio(33091399), lb1);
